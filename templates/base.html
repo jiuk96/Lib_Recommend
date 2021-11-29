@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <title>도서관 시스템</title>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}" > </script>
+    <script src="{{ url_for('static', filename='jquery.js') }}" > </script>
+    <link href="{{url_for('static',filename='bootstrap.min.css')}}" rel="stylesheet">
+    <style>
+        .wrap {
+            width: 780px;
+            margin: 10px auto;
+        }
+
+        .title {
+            text-align: center;
+        }
+    </style>
+    {% block scripts %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="wrap">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">도서관 시스템</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <!-- 로그인한 사람과 하지 않은 사람을 구분하여 내비게이션 바를 보여주세요. -->
+                        {% if not session['login'] %}
+                        <a class="nav-link" href="/login">로그인</a>
+                        <a class="nav-link" href="/join">회원가입</a>
+                        
+                        {% else %}
+                        
+                        <a class="nav-link" href="/logout">로그아웃</a>
+                        <a class="nav-link" href="/logout">게시판</a>
+                        <a class="nav-link" href="/logout">좌석예약</a>
+                        
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <hr>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>
