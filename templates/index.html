@@ -2,7 +2,7 @@
 {% block scripts %}
 <script>
     function postContent() {
-                let content = $("#my-content").val()
+        let content = $("#my-content").val()
         let author = `{{g.user.user_id}}`
 
         $.ajax({
@@ -99,7 +99,7 @@
         {{post.created_at}}
     </div>
 
-    <!-- 자신의 글만 삭제 및 수정을 할 수 있도록 수정하세요. -->
+    <!-- 자신의 글만 수정할 수 있게 한다 -->
     {% if post.author == g.user.user_id %}
     <div class="card-footer text-muted">
         <button class="btn btn-sm btn-warning" onclick="deletePost('{{post.id}}')">삭제하기</button>

@@ -31,7 +31,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <!-- 로그인한 사람과 하지 않은 사람을 구분하여 내비게이션 바를 보여주세요. -->
                         {% if not session['login'] %}
                         <a class="nav-link" href="/login">로그인</a>
                         <a class="nav-link" href="/join">회원가입</a>

@@ -12,7 +12,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = db.session.query(User).filter(User.studentID == user_id).first()
+        g.user = db.session.query(User).filter(User.user_id == user_id).first()
 
 @board.route("/")
 def home(): 
@@ -23,9 +23,7 @@ def home():
     
 @board.route("/post", methods=["GET","POST"])
 def post():
-    # 세션을 검사하는 과정을 추가하세요.
     if session.get("login") is not None:
-    
         if request.method == 'GET':
             data = Post.query.order_by(Post.created_at.desc()).all()
             return render_template("index.html", post_list = data)
@@ -38,12 +36,10 @@ def post():
             db.session.commit()
             return jsonify({"result":"success"})
     else:
-        # 세션이 없다면 redirect 하세요.
         return redirect("/")
 
 @board.route("/join",methods=["GET","POST"])
 def join():
-    # 세션을 검사하는 과정을 추가하세요.
     if session.get("login") is None:
         if request.method == 'GET':
             return render_template('join.html')
@@ -60,11 +56,10 @@ def join():
             db.session.commit()
             return jsonify({"result":"success"})
     else:
-        # 세션이 없다면 redirect 하세요.
         return redirect("/")
+
 @board.route("/login", methods=['GET','POST'])
 def login():
-    # 세션을 검사하는 과정을 추가하세요.
     if session.get("login") is None:
         if request.method == 'GET':
             return render_template('login.html')
@@ -74,14 +69,13 @@ def login():
             user = User.query.filter(User.user_id == user_id).first()
             if user is not None:
                 if bcrypt.check_password_hash(user.user_pw, user_pw):
-                    session['login'] = user.id
+                    session['login'] = user.studentID
                     return jsonify({"result": "success"})
                 else:
                     return jsonify({"result": "fail"})
             else:
                 return jsonify({"result": "fail"})
     else:
-        # 세션이 없다면 redirect 하세요.
         return redirect("/")
         
 @board.route("/logout")
