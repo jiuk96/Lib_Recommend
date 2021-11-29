@@ -12,21 +12,26 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = db.session.query(User).filter(User.user_id == user_id).first()
+        g.user = db.session.query(User).filter(User.studentID == user_id).first()
 
 @board.route("/")
 def home(): 
     if session.get('login') is None:
         return redirect("/login")
     else:
-        return redirect("/post")
+        return redirect("/main")
+
+@board.route('/main')
+def main():
+    return render_template('main.html')
+
     
 @board.route("/post", methods=["GET","POST"])
 def post():
     if session.get("login") is not None:
         if request.method == 'GET':
             data = Post.query.order_by(Post.created_at.desc()).all()
-            return render_template("index.html", post_list = data)
+            return render_template("post.html", post_list = data)
         else:
             content = request.form['content']
             author = request.form['author']
