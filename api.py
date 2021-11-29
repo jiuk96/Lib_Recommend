@@ -12,7 +12,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = db.session.query(User).filter(User.id == user_id).first()
+        g.user = db.session.query(User).filter(User.studentID == user_id).first()
 
 @board.route("/")
 def home(): 
@@ -40,7 +40,7 @@ def post():
     else:
         # 세션이 없다면 redirect 하세요.
         return redirect("/")
-        
+
 @board.route("/join",methods=["GET","POST"])
 def join():
     # 세션을 검사하는 과정을 추가하세요.
@@ -51,8 +51,11 @@ def join():
             user_id = request.form['user_id']
             user_pw = request.form['user_pw']
             pw_hash = bcrypt.generate_password_hash(user_pw)
+            username = request.form['username']
+            userphone = request.form['userphone']
+            useremail = request.form['useremail']
 
-            user = User(user_id, pw_hash)
+            user = User(username,user_id,pw_hash,userphone,useremail)
             db.session.add(user)
             db.session.commit()
             return jsonify({"result":"success"})
