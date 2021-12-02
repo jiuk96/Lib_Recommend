@@ -1,3 +1,5 @@
+#backend api를 구현한 파일로, frontend와 기본적인 
+
 from flask import redirect, request, render_template, jsonify, Blueprint, session, g
 from models import User, Post
 from db_connect import db
@@ -23,26 +25,10 @@ def home():
 
 @board.route('/main')
 def main():
+    #
     return render_template('main.html')
 
-    
-@board.route("/post", methods=["GET","POST"])
-def post():
-    if session.get("login") is not None:
-        if request.method == 'GET':
-            data = Post.query.order_by(Post.created_at.desc()).all()
-            return render_template("post.html", post_list = data)
-        else:
-            content = request.form['content']
-            author = request.form['author']
-
-            post = Post(author,content)
-            db.session.add(post)
-            db.session.commit()
-            return jsonify({"result":"success"})
-    else:
-        return redirect("/")
-
+#회원가입
 @board.route("/join",methods=["GET","POST"])
 def join():
     if session.get("login") is None:
@@ -63,6 +49,7 @@ def join():
     else:
         return redirect("/")
 
+#로그인
 @board.route("/login", methods=['GET','POST'])
 def login():
     if session.get("login") is None:
@@ -82,12 +69,30 @@ def login():
                 return jsonify({"result": "fail"})
     else:
         return redirect("/")
-        
+
+#로그아웃
 @board.route("/logout")
 def logout():
     session['login'] = None
     return redirect('/')
-    
+
+#아래는 게시판 관련된 함수
+@board.route("/post", methods=["GET","POST"])
+def post():
+    if session.get("login") is not None:
+        if request.method == 'GET':
+            data = Post.query.order_by(Post.created_at.desc()).all()
+            return render_template("post.html", post_list = data)
+        else:
+            content = request.form['content']
+            author = request.form['author']
+
+            post = Post(author,content)
+            db.session.add(post)
+            db.session.commit()
+            return jsonify({"result":"success"})
+    else:
+        return redirect("/")
     
 @board.route("/post", methods=["DELETE"])
 def delete_post():
