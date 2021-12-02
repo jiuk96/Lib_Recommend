@@ -1,4 +1,6 @@
-#DB와 연동해주는 파일
+# DB와 연동해주는 파일
+
+# created by 장지욱 11.09
 
 from sqlalchemy.sql.schema import ForeignKey
 from db_connect import db
@@ -13,13 +15,21 @@ class User(db.Model):
     user_pw = db.Column(db.String(100), nullable=False)
     userphone = db.Column(db.String(30), nullable=False)
     useremail = db.Column(db.String(50))
-    
-    def __init__(self,username,user_id,user_pw,userphone,useremail):
+    distance = db.Column(db.Integer, default = '0')
+    acheater = db.Column(db.Integer, default = '0')
+    windownear = db.Column(db.Integer, default = '0')
+    door = db.Column(db.Integer, default = '0')
+
+    def __init__(self,username,user_id,user_pw,userphone,useremail,distance,acheater,windownear,door):
         self.username = username
         self.user_id = user_id
         self.user_pw = user_pw
         self.userphone = userphone
         self.useremail = useremail
+        self.distance = distance
+        self.acheater = acheater
+        self.windownear = windownear
+        self.door = door
 
 class Post(db.Model):
     __tablename__ = 'post'

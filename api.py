@@ -1,4 +1,6 @@
-#backend api를 구현한 파일로, frontend와 기본적인 
+# backend api를 구현한 파일로, 각 필요한 함수들(로그인, 회원가입, 게시판/수정/삭제, 좌석예약) 정의
+
+# created by 장지욱 11.09
 
 from flask import redirect, request, render_template, jsonify, Blueprint, session, g
 from models import User, Post
@@ -41,8 +43,12 @@ def join():
             username = request.form['username']
             userphone = request.form['userphone']
             useremail = request.form['useremail']
-
-            user = User(username,user_id,pw_hash,userphone,useremail)
+            distance = request.form['distance']
+            acheater = request.form['acheater']
+            windownear = request.form['windownear']
+            door = request.form['door']
+            
+            user = User(username,user_id,pw_hash,userphone,useremail,distance,acheater,windownear,door)
             db.session.add(user)
             db.session.commit()
             return jsonify({"result":"success"})
