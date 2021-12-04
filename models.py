@@ -15,21 +15,22 @@ class User(db.Model):
     user_pw = db.Column(db.String(100), nullable=False)
     userphone = db.Column(db.String(30), nullable=False)
     useremail = db.Column(db.String(50))
-    distance = db.Column(db.Integer, default = '0')
-    acheater = db.Column(db.Integer, default = '0')
-    windownear = db.Column(db.Integer, default = '0')
-    door = db.Column(db.Integer, default = '0')
+    # distance = db.Column(db.Integer, default = '0')
+    # acheater = db.Column(db.Integer, default = '0')
+    # windownear = db.Column(db.Integer, default = '0')
+    # door = db.Column(db.Integer, default = '0')
 
-    def __init__(self,username,user_id,user_pw,userphone,useremail,distance,acheater,windownear,door):
+    def __init__(self,username,user_id,user_pw,userphone,useremail):
+    # ,distance,acheater,windownear,door):
         self.username = username
         self.user_id = user_id
         self.user_pw = user_pw
         self.userphone = userphone
         self.useremail = useremail
-        self.distance = distance
-        self.acheater = acheater
-        self.windownear = windownear
-        self.door = door
+        # self.distance = distance
+        # self.acheater = acheater
+        # self.windownear = windownear
+        # self.door = door
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -42,3 +43,33 @@ class Post(db.Model):
     def __init__(self, author,content):
         self.author = author
         self.content = content
+
+# class Seat(db.Model):
+#     __tablename__ = 'seat'
+#     seatNum = db.Column(db.Integer,  primary_key=True,
+#                    nullable=False, autoincrement=True)
+#     studentID = db.Column(db.Integer, ForeignKey(User.studentID))
+#     used = db.Column(db.Integer, default = '0')
+#     finish_time = db.Column(db.DateTime, default=datetime.utcnow)
+
+#     def __init__(self,studentID,used):
+#         self.studentID = studentID
+#         self.used = used
+
+# class Reservation(db.Model):
+#     __tablename__ = 'reseration'
+#     reservationID = db.Column(db.Integer,  primary_key=True,
+#                    nullable=False, autoincrement=True)
+#     seatNum = db.Column(db.Integer, ForeignKey(Seat.seatNum), nullable=False)
+#     username = db.Column(db.String(255), nullable=False)
+#     reserved_time = db.Column(db.DateTime, default=datetime.utcnow)
+#     starttime = db.Column(db.DateTime, default=datetime.utcnow)
+#     finishtime = db.Column(db.DateTime, default=datetime.utcnow)
+
+#     def __init__(self,seatNum,username,reserved_time,starttime,finishtime):
+#         self.seatNum = seatNum
+#         self.username = username
+#         self.reserved_time = reserved_time
+#         self.starttime = starttime
+#         self.finishtime = finishtime
+    

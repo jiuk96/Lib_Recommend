@@ -4,6 +4,7 @@
 
 from flask import redirect, request, render_template, jsonify, Blueprint, session, g
 from models import User, Post
+# Seat, Reservation
 from db_connect import db
 from flask_bcrypt import Bcrypt
 
@@ -26,9 +27,16 @@ def home():
         return redirect("/main")
 
 @board.route('/main')
-def main():
-    #
+def show_myreserve():
     return render_template('main.html')
+
+    # if session.get("login") is not None:
+    #     if request.method == 'GET':
+    #         data = Seat.query.order_by(Reservation.starttime.desc()).all()
+    #         return render_template("main.html", seat_list = data)
+    # else:
+    #     return redirect("/")
+    
 
 #회원가입
 @board.route("/join",methods=["GET","POST"])
@@ -43,12 +51,13 @@ def join():
             username = request.form['username']
             userphone = request.form['userphone']
             useremail = request.form['useremail']
-            distance = request.form['distance']
-            acheater = request.form['acheater']
-            windownear = request.form['windownear']
-            door = request.form['door']
+            # distance = request.form['distance']
+            # acheater = request.form['acheater']
+            # windownear = request.form['windownear']
+            # door = request.form['door']
             
-            user = User(username,user_id,pw_hash,userphone,useremail,distance,acheater,windownear,door)
+            user = User(username,user_id,pw_hash,userphone,useremail)
+            # (distance,acheater,windownear,door)
             db.session.add(user)
             db.session.commit()
             return jsonify({"result":"success"})
