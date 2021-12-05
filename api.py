@@ -51,12 +51,12 @@ def join():
             username = request.form['username']
             userphone = request.form['userphone']
             useremail = request.form['useremail']
-            # distance = request.form['distance']
-            # acheater = request.form['acheater']
-            # windownear = request.form['windownear']
-            # door = request.form['door']
+            distance = request.form['distance']
+            acheater = request.form['acheater']
+            windownear = request.form['windownear']
+            door = request.form['door']
             
-            user = User(username,user_id,pw_hash,userphone,useremail)
+            user = User(username,user_id,pw_hash,userphone,useremail,distance,acheater,windownear,door)
             # (distance,acheater,windownear,door)
             db.session.add(user)
             db.session.commit()
