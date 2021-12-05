@@ -33,7 +33,7 @@ def show_myreserve():
     # if session.get("login") is not None:
     #     user_id = session.get('login')
     #     if request.method == 'GET':
-    #         data = Reservation.query.filter(Reservation.).all()
+    #         data = Reservation.query.filter(Reservation.studentID == user_id).all()
     #         return render_template("main.html", reserve_list = data)
     # else:
     #     return redirect("/")
