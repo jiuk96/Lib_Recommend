@@ -16,10 +16,10 @@ class User(db.Model):
     user_pw = db.Column(db.String(100), nullable=False)
     userphone = db.Column(db.String(30), nullable=False)
     useremail = db.Column(db.String(50))
-    distance = db.Column(db.String(5), default = 'off')
-    acheater = db.Column(db.String(5), default = 'off')
-    windownear = db.Column(db.String(5), default = 'off')
-    door = db.Column(db.String(5), default = 'off')
+    distance = db.Column(db.Integer, default = 0)
+    acheater = db.Column(db.Integer, default = 0)
+    windownear = db.Column(db.Integer, default = 0)
+    door = db.Column(db.Integer, default = 0)
 
     def __init__(self,username,user_id,user_pw,userphone,useremail,distance,acheater,windownear,door):
     # ):
