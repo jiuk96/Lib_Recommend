@@ -31,9 +31,10 @@ def show_myreserve():
     return render_template('main.html')
 
     # if session.get("login") is not None:
+    #     user_id = session.get('login')
     #     if request.method == 'GET':
-    #         data = Seat.query.order_by(Reservation.starttime.desc()).all()
-    #         return render_template("main.html", seat_list = data)
+    #         data = Reservation.query.filter(Reservation.).all()
+    #         return render_template("main.html", reserve_list = data)
     # else:
     #     return redirect("/")
     
