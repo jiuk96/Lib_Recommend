@@ -1,5 +1,111 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<style>
+@font-face {
+  font-family: 'GongGothicLight';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicLight.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{
+  padding : 0;
+  font-family: 'GongGothicLight';
+  font-weight: normal;
+  font-style: normal;
+}
+
+main{
+  margin-bottom: 10%;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card {
+  width : 100%;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-body {
+  width : 50%;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top:80px;
+  padding-bottom: 80px;
+}
+
+.mb-3_row {
+  padding: 20px;
+}
+
+.form-control {
+  width: 120%;
+  border:none;
+  outline:none;
+  font-size:15px;
+  height:38px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.col-sm-2-col-form-label {
+  width : 100%;
+}
+
+.btn-primary1 {
+  margin-bottom: 0px;
+  margin-right : 30px;
+  width:40%;
+  height:40px;
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: center;
+  background-size: 100%;
+  color:white;
+  font-weight: bold;
+  font-size:15px;
+  border:none;
+  cursor:pointer;
+  display:inline;
+}
+
+.btn-primary2 {
+  margin-bottom: 0px;
+  width:40%;
+  height:40px;
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: center;
+  background-size: 100%;
+  color:white;
+  font-weight: bold;
+  font-size:15px;
+  border:none;
+  cursor:pointer;
+  display:inline;
+}
+
+#bt {
+  margin-top: 30px;
+  text-align : center;
+}
+
+
+
+</style>
+
+{% endblock %}
+
 {% block scripts %}
 <script>
     function login() {
@@ -29,25 +135,25 @@
 
 {% block content %}
 <h2 class="title">로그인</h2>
-<hr>
 <div class="card">
     <div class="card-body">
-        <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">ID</label>
+        <div class="mb-3_row">
+            <label class="col-sm-2-col-form-label">ID</label>
             <div class="col-sm-10">
                 <input type="text" id='userId' class="form-control" placeholder="아이디를 입력하세요">
             </div>
         </div>
-        <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Password</label>
+        <div class="mb-3_row">
+            <label class="col-sm-2-col-form-label">Password</label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" id="userPw" placeholder="비밀번호를 입력하세요">
             </div>
         </div>
-        <button class="btn btn-primary" onclick=login()>로그인하기</button>
-        <a href="/join" class="btn btn-primary">회원가입하기</a>
+        <div id = "bt">
+          <button class="btn-primary1" onclick=login()>로그인하기</button>
+          <button class="btn-primary2"  href="/join" >회원가입하기</button>
+        </div>
     </div>
 </div>
-<hr>
 
 {% endblock %}

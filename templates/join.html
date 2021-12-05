@@ -1,3 +1,9 @@
+<!--
+created by 장지욱 
+modified by 최고운 12.3 css추가, 좌석 선호 조건 체크박스 작성, 버튼 위치 조정
+modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선호 조건 자바스크립트 코드에 추가
+-->
+
 {% extends 'base.html' %}
 
 {% block scripts %}
@@ -9,6 +15,10 @@
         let username = $("#username").val()
         let userphone = $("#userphone").val()
         let useremail = $("#useremail").val()
+        let distance = $("#distance").val()
+        let acheater = $("#acheater").val()
+        let windownear = $("#windownear").val()
+        let door = $("#door").val()
 
         if (user_id == '' || user_pw == '') {
             alert("아이디와 패스워드를 입력 해 주세요");
@@ -28,7 +38,11 @@
                 'user_id': user_id,
                 'user_pw': user_pw,
                 'userphone': userphone,
-                'useremail': useremail
+                'useremail': useremail,
+                'distance' : distance,
+                'acheater' : acheater,
+                'windownear' : windownear,
+                'door' : door
             },
             success: function (res) {
                 if (res['result'] == 'success') {
@@ -38,59 +52,173 @@
             }
         })
     }
+    $(function() {
+        $('#select').change(function() {
+            if ($('#select').val() == 'directly') {
+                $('#textEmail').attr("disabled", false);
+                $('#textEmail').val("");
+                $('#textEmail').focus();
+            } else {
+                $('#textEmail').val($('#select').val());
+            }
+        })
+    });
 </script>
 {% endblock %}
 
 {% block content %}
-<h2 class="title">회원가입</h2>
-<hr>
+<h2 class="title" style="font-weight: 600;">회원가입</h2>
+<br>
 <div class="card">
     <div class="card-body">
         <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">아이디</label>
+            <label class="col-sm-2 col-form-label" id="t">아이디</label>
             <div class="col-sm-10">
                 <input type="text" id='userId' class="form-control" placeholder="아이디를 입력하세요.">
             </div>
         </div>
         <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">비밀번호</label>
+            <label class="col-sm-2 col-form-label" id="t">비밀번호</label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" id="userPw" placeholder="비밀번호를 입력하세요.">
             </div>
         </div>
         <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">비밀번호 체크</label>
+            <label class="col-sm-2 col-form-label" id="t">비밀번호 체크</label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" id="userPw2" placeholder="비밀번호를 한번더 입력하세요.">
             </div>
         </div>
         <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">이름</label>
+            <label class="col-sm-2 col-form-label" id="t">이름</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="username" placeholder="이름을 입력하세요.">
             </div>
         </div>
         <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">핸드폰번호</label>
+            <label class="col-sm-2 col-form-label" id="t">핸드폰번호</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="userphone" placeholder="핸드폰번호를 입력하세요.">
             </div>
         </div>
         <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">이메일</label>
+            <label class="col-sm-2 col-form-label" id="t">이메일</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="useremail" placeholder="이메일을 입력하세요.">
+                <span>@</span>
+                <input id="textEmail" class="form-control" placeholder="이메일을 선택하세요.">
+                <select class="form-select" id="select">
+                    <option value="" disabled selected>E-Mail 선택</option>
+                    <option value="naver.com" id="naver.com">naver.com</option>
+                    <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
+                    <option value="gmail.com" id="gmail.com">gmail.com</option>
+                    <option value="nate.com" id="nate.com">nate.com</option>
+                    <option value="directly" id="textEmail">직접 입력하기</option>
+                </select>
             </div>
         </div>
-        
-        <p>선호사항 기입</p>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label" id="t">좌석 선호 조건</label>
+            <div class="col-sm-10" id="prefer">
+                <label class="col-sm-2 col-form-label">
+                    <input type="checkbox" class="form-check-input" id="distance"> 거리두기 고려
+                </label>
+                <label class="col-sm-2 col-form-label">
+                    <input type="checkbox" class="form-check-input" id="acheater"> 히터/에어컨
+                </label>
+                <label class="col-sm-2 col-form-label">
+                    <input type="checkbox" class="form-check-input" id="windownear"> 창문 근처
+                </label>
+                <label class="col-sm-2 col-form-label">
+                    <input type="checkbox" class="form-check-input" id="door"> 출입문 근처
+                </label>
+            </div>
+        </div>
 
         <!-- 거리두기, 히터/에어컨, 창가자리, 문 체크박스 만들기 -->
-
-        <button class="btn btn-primary" onclick=regist()>회원가입하기</button>
-        <a href="/login" class="btn btn-primary">로그인하기</a>
+<br><br>
+        <div id="bt">
+            <button class="btn btn-primary" onclick=regist()>회원가입하기</button>
+            <a href="/login" class="btn btn-primary">로그인하기</a>
+        </div>
+        
     </div>
 </div>
-<hr>
+<br>
 
+{% endblock %}
+
+{% block style %}
+<style>
+    /*#useremail{
+        width:160px;
+    }
+    #textemail{
+        width:120px;
+    }*/
+    #select{
+        width:100px;
+    }
+    .mb-3 row{
+        margin-bottom:1px;
+    }
+    .form-control, .col-sm-10:not(#prefer){
+        width:330px;
+        display: inline-block;
+    }
+    .form-control{
+        margin-top:13px;
+        background-color: #f8f9fa;
+        border:none;
+    }
+    main{
+        margin-top:20px;
+        margin-bottom: 100px;
+    }
+    .card{
+        padding:20px;
+        border-radius: 10px;
+        align-items: center;
+    }
+    .card-body{
+        width:500px;
+    }
+    #t{
+        width:130px;
+        line-height: 50px;
+        
+    }
+    #prefer{
+        display: inline;
+        height:64px;
+        width:500px;
+        text-align: center;
+    }
+    #prefer input{
+        margin-right: 3px;
+        vertical-align: middle;
+    }
+    #prefer label{
+        display: inline;
+        margin-right:12px;
+        line-height: 64px;
+    }
+    #bt{
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    #bt button{
+        margin-right: 30px;
+        background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+        border:none;
+        width:200px;
+        height:40px;
+    }
+    #bt a{
+        background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+        border:none;
+        width:200px;
+        height:40px;
+    }
+</style>
 {% endblock %}
