@@ -28,7 +28,8 @@ main{
 }
 
 .card {
-  width : 100%;
+  width : 600px;
+  margin: auto;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -36,18 +37,18 @@ main{
 }
 
 .card-body {
-  width : 50%;
+  width : 500px;
   background: white;
   border-radius: 20px;
-  display: flex;
   justify-content: center;
-  flex-direction: column;
   padding-top:80px;
   padding-bottom: 80px;
 }
 
 .mb-3_row {
+  margin:auto;
   padding: 20px;
+  width: 350px;
 }
 
 .form-control {
@@ -64,42 +65,23 @@ main{
   width : 100%;
 }
 
-.btn-primary1 {
-  margin-bottom: 0px;
-  margin-right : 30px;
-  width:40%;
-  height:40px;
+#bt{
+  margin-top:30px;
+  text-align: center;
+}
+#bt button{
+  margin-right: 30px;
   background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
-  background-position: center;
-  background-size: 100%;
-  color:white;
-  font-weight: bold;
-  font-size:15px;
   border:none;
-  cursor:pointer;
-  display:inline;
-}
-
-.btn-primary2 {
-  margin-bottom: 0px;
-  width:40%;
+  width:150px;
   height:40px;
+}
+#bt a{
   background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
-  background-position: center;
-  background-size: 100%;
-  color:white;
-  font-weight: bold;
-  font-size:15px;
   border:none;
-  cursor:pointer;
-  display:inline;
+  width:150px;
+  height:40px;
 }
-
-#bt {
-  margin-top: 30px;
-  text-align : center;
-}
-
 
 
 </style>
@@ -150,8 +132,8 @@ main{
             </div>
         </div>
         <div id = "bt">
-          <button class="btn-primary1" onclick=login()>로그인하기</button>
-          <button class="btn-primary2"  href="/join" >회원가입하기</button>
+          <button class="btn btn-primary" onclick=login()>로그인하기</button>
+          <a class="btn btn-primary"  href="/join" >회원가입하기</a>
         </div>
     </div>
 </div>
