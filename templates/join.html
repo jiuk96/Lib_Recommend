@@ -4,6 +4,7 @@ modified by 최고운 12.3 css추가, 좌석 선호 조건 체크박스 작성, 
 modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선호 조건 자바스크립트 코드에 추가
 -->
 
+
 {% extends 'base.html' %}
 
 {% block scripts %}
@@ -63,6 +64,19 @@ modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선�
             }
         })
     });
+    if(document.getElementById("distance").checked) {
+    document.getElementById("distance_hidden").disabled = true;}
+
+    if(document.getElementById("acheater").checked) {
+    document.getElementById("acheater_hidden").disabled = true;}
+
+    if(document.getElementById("windownear").checked) {
+    document.getElementById("windownear_hidden").disabled = true;}
+    
+    if(document.getElementById("door").checked) {
+    document.getElementById("door_hidden").disabled = true;}
+
+
 </script>
 {% endblock %}
 
@@ -121,16 +135,20 @@ modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선�
             <label class="col-sm-2 col-form-label" id="t">좌석 선호 조건</label>
             <div class="col-sm-10" id="prefer">
                 <label class="col-sm-2 col-form-label">
-                    <input type="checkbox" class="form-check-input" id="distance"> 거리두기 고려
+                    <input type="checkbox" class="form-check-input" id="distance" value="1"> 거리두기 고려
+                    <input type="hidden" name="input_check" value='0' id="distance_hidden"/>
                 </label>
                 <label class="col-sm-2 col-form-label">
-                    <input type="checkbox" class="form-check-input" id="acheater"> 히터/에어컨
+                    <input type="checkbox" class="form-check-input" id="acheater" default="0"> 히터/에어컨
+                    <input type="hidden" name="input_check" value='0' id="acheater_hidden"/>
                 </label>
                 <label class="col-sm-2 col-form-label">
                     <input type="checkbox" class="form-check-input" id="windownear"> 창문 근처
+                    <input type="hidden" name="input_check" value='0' id="windownear_hidden"/>
                 </label>
                 <label class="col-sm-2 col-form-label">
                     <input type="checkbox" class="form-check-input" id="door"> 출입문 근처
+                    <input type="hidden" name="input_check" value='0' id="door_hidden"/>
                 </label>
             </div>
         </div>
