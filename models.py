@@ -1,4 +1,5 @@
-# DB와 연동해주는 파일
+# ORM 방식으로 데이터베이스에 객체를 통해 접근 (SQL 질의어 없이도 데이터베이스 접근 가능)
+# 아래의 코드에서 각 클래스의 이름은 DB의 테이블과 매핑하여 사용한다.
 
 # created by 장지욱 11.09
 
@@ -61,14 +62,14 @@ class Post(db.Model):
 #     reservationID = db.Column(db.Integer,  primary_key=True,
 #                    nullable=False, autoincrement=True)
 #     seatNum = db.Column(db.Integer, ForeignKey(Seat.seatNum), nullable=False)
-#     username = db.Column(db.String(255), nullable=False)
+#     studentID = db.Column(db.String(255), nullable=False)
 #     reserved_time = db.Column(db.DateTime, default=datetime.utcnow)
 #     starttime = db.Column(db.DateTime, default=datetime.utcnow)
 #     finishtime = db.Column(db.DateTime, default=datetime.utcnow)
 
-#     def __init__(self,seatNum,username,reserved_time,starttime,finishtime):
+#     def __init__(self,seatNum,studentID,reserved_time,starttime,finishtime):
 #         self.seatNum = seatNum
-#         self.username = username
+#         self.studentID = studentID
 #         self.reserved_time = reserved_time
 #         self.starttime = starttime
 #         self.finishtime = finishtime
