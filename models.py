@@ -51,12 +51,12 @@ class Seat(db.Model):
      __tablename__ = 'seat'
      seatNum = db.Column(db.Integer,  primary_key=True,
                     nullable=False, autoincrement=True)
-     studentID = db.Column(db.Integer, ForeignKey(User.studentID))
+     user_id = db.Column(db.Integer, nullable = False)
      used = db.Column(db.Integer, default = '0')
      finish_time = db.Column(db.DateTime, default=datetime.utcnow)
 
-     def __init__(self,studentID,used):
-         self.studentID = studentID
+     def __init__(self,user_id,used,finish_time):
+         self.user_id = user_id
          self.used = used
          self.finish_time = finish_time
 
@@ -64,16 +64,32 @@ class Reservation(db.Model):
      __tablename__ = 'reservation'
      reservationID = db.Column(db.Integer,  primary_key=True,
                     nullable=False, autoincrement=True)
-     seatNum = db.Column(db.Integer, ForeignKey(Seat.seatNum), nullable=False)
-     studentID = db.Column(db.String(255), nullable=False)
+     seatNum = db.Column(db.Integer, nullable=False)
+     user_id = db.Column(db.String(255), nullable=False)
      reserved_time = db.Column(db.DateTime, default=datetime.utcnow)
      starttime = db.Column(db.DateTime, default=datetime.utcnow)
      finishtime = db.Column(db.DateTime, default=datetime.utcnow)
 
-     def __init__(self,seatNum,studentID,reserved_time,starttime,finishtime):
+     def __init__(self,seatNum,user_id,reserved_time,starttime,finishtime):
          self.seatNum = seatNum
-         self.studentID = studentID
+         self.user_id = user_id
          self.reserved_time = reserved_time
          self.starttime = starttime
          self.finishtime = finishtime
-    
+
+# 아래는 테이블 작성했던 sql문입니다. 추후 수정사항이 생길 수도 있습니다. - 장지욱
+# create table Reservation (
+#     reservationID INT NOT NULL AUTO_INCREMENT,
+#     seatNum INT NOT NULL,
+#     user_id VARCHAR(30) NOT NULL,
+#     reserved_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     starttime DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     finishtime DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     PRIMARY KEY(reservationID));
+
+# create table Seat (
+#     seatNum INT NOT NULL AUTO_INCREMENT,
+#     user_id INT NOT NULL,
+#     used INT DEFAULT '0',
+#     finish_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     PRIMARY KEY(seatNum));
