@@ -7,8 +7,8 @@
 #                   11.28 - 예약 기능/수정/삭제 구현
 
 from flask import redirect, request, render_template, jsonify, Blueprint, session, g
-from models import User, Post
-# Seat, Reservation
+from models import User, Post, Reservation
+# Seat
 from db_connect import db
 from flask_bcrypt import Bcrypt
 
@@ -55,7 +55,6 @@ def join(): #회원가입 정보를 Front에서 받아, 정보들을 DB에 저�
             acheater = request.form['acheater']
             windownear = request.form['windownear']
             door = request.form['door']
-            
 
             user = User(username,user_id,pw_hash,userphone,useremail,distance,acheater,windownear,door)
                 
@@ -142,14 +141,13 @@ def update_post(): #본인의 post내용을 수정할 수 있게 하고, DB에�
 # 예약 내역 
 @board.route('/main')
 def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 전달한다. 리턴값:reserve_list
-    return render_template('main.html')
+    if session.get("login") is not None:
+        if request.method == 'GET':
+            data = Reservation.query.filter(Reservation.user_id == session['login']).all()
+            return render_template("main.html", reserve_list = data)
+    else:
+        return redirect("/")
 
-    # if session.get("login") is not None:
-    #     if request.method == 'GET':
-    #         data = Reservation.query.filter(Reservation.user_id == session['login']).all()
-    #         return render_template("main.html", reserve_list = data)
-    # else:
-    #     return redirect("/")
 
 # 예약 기능 구현(미완)
 # @board.route('/reserve',methods=["GET","POST"])
