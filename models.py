@@ -47,33 +47,33 @@ class Post(db.Model):
         self.author = author
         self.content = content
 
-# class Seat(db.Model):
-#     __tablename__ = 'seat'
-#     seatNum = db.Column(db.Integer,  primary_key=True,
-#                    nullable=False, autoincrement=True)
-#     user_id = db.Column(db.Integer, ForeignKey(User.studentID))
-#     used = db.Column(db.Integer, default = '0')
-#     finish_time = db.Column(db.DateTime, default=datetime.utcnow)
+class Seat(db.Model):
+     __tablename__ = 'seat'
+     seatNum = db.Column(db.Integer,  primary_key=True,
+                    nullable=False, autoincrement=True)
+     studentID = db.Column(db.Integer, ForeignKey(User.studentID))
+     used = db.Column(db.Integer, default = '0')
+     finish_time = db.Column(db.DateTime, default=datetime.utcnow)
 
-#     def __init__(self,user_id,used):
-#         self.user_id = studentID
-#         self.used = used
-#         self.finish_time = finish_time
+     def __init__(self,studentID,used):
+         self.studentID = studentID
+         self.used = used
+         self.finish_time = finish_time
 
-# class Reservation(db.Model):
-#     __tablename__ = 'reseration'
-#     reservationID = db.Column(db.Integer,  primary_key=True,
-#                    nullable=False, autoincrement=True)
-#     seatNum = db.Column(db.Integer, ForeignKey(Seat.seatNum), nullable=False)
-#     user_id = db.Column(db.String(255), nullable=False)
-#     reserved_time = db.Column(db.DateTime, default=datetime.utcnow)
-#     starttime = db.Column(db.DateTime, default=datetime.utcnow)
-#     finishtime = db.Column(db.DateTime, default=datetime.utcnow)
+class Reservation(db.Model):
+     __tablename__ = 'reservation'
+     reservationID = db.Column(db.Integer,  primary_key=True,
+                    nullable=False, autoincrement=True)
+     seatNum = db.Column(db.Integer, ForeignKey(Seat.seatNum), nullable=False)
+     studentID = db.Column(db.String(255), nullable=False)
+     reserved_time = db.Column(db.DateTime, default=datetime.utcnow)
+     starttime = db.Column(db.DateTime, default=datetime.utcnow)
+     finishtime = db.Column(db.DateTime, default=datetime.utcnow)
 
-#     def __init__(self,seatNum,studentID,reserved_time,starttime,finishtime):
-#         self.seatNum = seatNum
-#         self.studentID = studentID
-#         self.reserved_time = reserved_time
-#         self.starttime = starttime
-#         self.finishtime = finishtime
+     def __init__(self,seatNum,studentID,reserved_time,starttime,finishtime):
+         self.seatNum = seatNum
+         self.studentID = studentID
+         self.reserved_time = reserved_time
+         self.starttime = starttime
+         self.finishtime = finishtime
     

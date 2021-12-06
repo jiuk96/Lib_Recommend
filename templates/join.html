@@ -3,6 +3,7 @@ created by 장지욱  11.20 기본틀 및 ajax 작성
 modified by 장지욱 11.23 아이디 중복 기능 추가
 modified by 최고운 12.3 css추가, 좌석 선호 조건 체크박스 작성, 버튼 위치 조정
 modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선호 조건 자바스크립트 코드에 추가
+modified by 최고운 12.5 체크박스 db연동 수정
 -->
 
 
@@ -79,19 +80,8 @@ modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선�
             }
         })
     });
-    /*if(document.getElementById("distance").checked) {
-    document.getElementById("distance_hidden").disabled = true;}
 
-    if(document.getElementById("acheater").checked) {
-    document.getElementById("acheater_hidden").disabled = true;}
-
-    if(document.getElementById("windownear").checked) {
-    document.getElementById("windownear_hidden").disabled = true;}
-    
-    if(document.getElementById("door").checked) {
-    document.getElementById("door_hidden").disabled = true;}*/
-
-function TfCheck(obj) {
+function TfCheck(obj) { /*선호좌석 체크박스의 리턴값을 0/1로 설정*/
     var checked = obj.checked;
     if(checked){
         obj.value="1";
@@ -176,7 +166,6 @@ function TfCheck(obj) {
             </div>
         </div>
 
-        <!-- 거리두기, 히터/에어컨, 창가자리, 문 체크박스 만들기 -->
 <br><br>
         <div id="bt">
             <button class="btn btn-primary" onclick=regist()>회원가입하기</button>
