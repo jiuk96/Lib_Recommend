@@ -2,7 +2,7 @@
 
 # created by 장지욱 11.09
 # modified by 장지욱 11.14 - 회원가입, 로그인 구현, 세션 관리 구현
-#                   11.20 - 게시판 확인/post/수정/삭제 구현
+#                   11.20 - 게시판 확인/post/수정/삭제 구현, 아이디 중복 기능 추가
 #                   11.25 - 본인 예약내역 전달 구현
 #                   11.28 - 예약 기능/수정/삭제 구현
 
@@ -22,7 +22,7 @@ def load_logged_in_user(): #이미 로그인을 한 경우, 그 로그인 정보
     if user_id is None:
         g.user = None
     else:
-        g.user = db.session.query(User).filter(User.studentID == user_id).first()
+        g.user = db.session.query(User).filter(User.user_id == user_id).first()
 
 @board.route("/")
 def home(): 
@@ -38,7 +38,14 @@ def join(): #회원가입 정보를 Front에서 받아, 정보들을 DB에 저�
         if request.method == 'GET':
             return render_template('join.html')
         else:
+            user_idcheck = db.session.query(User.user_id).all()
+            user_idcheck = [x[0] for x in user_idcheck]
+
             user_id = request.form['user_id']
+
+            if user_id in user_idcheck: #아이디 중복 여부 체크하고, 이미 아이디가 있으면 json형식으로 아이디있음을 전달
+                return jsonify({"result":"alreadyID"})
+
             user_pw = request.form['user_pw']
             pw_hash = bcrypt.generate_password_hash(user_pw)
             username = request.form['username']
@@ -49,8 +56,9 @@ def join(): #회원가입 정보를 Front에서 받아, 정보들을 DB에 저�
             windownear = request.form['windownear']
             door = request.form['door']
             
+
             user = User(username,user_id,pw_hash,userphone,useremail,distance,acheater,windownear,door)
-            
+                
             db.session.add(user)
             db.session.commit()
             return jsonify({"result":"success"})
@@ -69,7 +77,7 @@ def login(): #로그인 정보를 입력받고, DB와의 로그인 정보 일치
             user = User.query.filter(User.user_id == user_id).first()
             if user is not None:
                 if bcrypt.check_password_hash(user.user_pw, user_pw):
-                    session['login'] = user.studentID
+                    session['login'] = user.user_id
                     return jsonify({"result": "success"})
                 else:
                     return jsonify({"result": "fail"})
@@ -120,7 +128,7 @@ def delete_post(): #본인의 post내용을 삭제할 수 있게 하고, DB에�
 def update_post(): #본인의 post내용을 수정할 수 있게 하고, DB에도 그 수정사항을 반영한다.
     id = request.form['id']
     content = request.form['content']
-    author = User.query.filter(User.id == session['login']).first()
+    author = User.query.filter(User.user_id == session['login']).first()
 
     data = Post.query.filter(
         Post.id == id, Post.author == author.user_id
@@ -137,14 +145,13 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
     return render_template('main.html')
 
     # if session.get("login") is not None:
-    #     user_id = session.get('login')
     #     if request.method == 'GET':
-    #         data = Reservation.query.filter(Reservation.studentID == user_id).all()
+    #         data = Reservation.query.filter(Reservation.user_id == session['login']).all()
     #         return render_template("main.html", reserve_list = data)
     # else:
     #     return redirect("/")
 
-# 예약 기능 구현
+# 예약 기능 구현(미완)
 # @board.route('/reserve',methods=["GET","POST"])
 # def reserve():
 #     if session.get("login") is None:
