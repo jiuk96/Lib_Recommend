@@ -2,9 +2,10 @@
 
 # created by 장지욱 11.09
 # modified by 장지욱 11.14 - 회원가입, 로그인 구현, 세션 관리 구현
-#                   11.20 - 게시판 확인/post/수정/삭제 구현, 아이디 중복 기능 추가
-#                   11.25 - 본인 예약내역 전달 구현
-#                   11.28 - 예약 기능/수정/삭제 구현
+#                   11.20 - 게시판 확인/post/수정/삭제 구현, 아이디 중복 방지 기능 추가
+#                   11.23 - 본인 예약내역 전달 구현
+#                   11.24 - 예약 기능/수정/삭제 초안 구현
+#                   11.25 - 예약 중복 방지 기능 추가
 
 from flask import redirect, request, render_template, jsonify, Blueprint, session, g
 from models import User, Post, Reservation
@@ -149,11 +150,12 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
         return redirect("/")
 
 
-# # 예약 기능 구현(미완)
+# # 예약 기능 구현
 # @board.route('/reserve',methods=["GET","POST"])
 # def reserve():
 #     if session.get("login") is None:
 #         if request.method == "GET":
+#             #좌석 추천 알고리즘을 여기다 넣어도 될거같기도...
 #             return render_template('reserve.html')
 #         else:
 #             seatNum = request.form['seatNum']
@@ -163,15 +165,23 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
 #             if seat_check.used != 0:
 #                 return jsonify({"result":"AlreadySeat"})
             
-#             #다른 좌석을 이미 예약을 했으면 TwoReserveImpossible
-
 #             user_id = request.form['user_id']
+
+#             #유저가 다른 좌석을 이미 예약을 했으면 TwoReserveImpossible
+#             user_idcheck = db.session.query(User.user_id).all()
+#             user_idcheck = [x[0] for x in user_idcheck]
+#             if user_id in user_idcheck:
+#                 return jsonify({"result":"TwoReserveImpossible"})
+
+#             used = request.form['used']
 #             reserved_time = request.form['reserved_time']
 #             starttime = request.form['starttime']
 #             finishtime = request.form['finishtime']
 
 #             reserve = Reservation(seatNum,user_id,reserved_time,starttime,finishtime)
+#             seat = Seat(seatNum,user_id,used,finishtime)
 
+#             db.session.add(seat)
 #             db.session.add(reserve)
 #             db.session.commit()
 #             return jsonify({"result":"success"})
