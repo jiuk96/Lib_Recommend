@@ -51,12 +51,12 @@ class Post(db.Model):
 #     __tablename__ = 'seat'
 #     seatNum = db.Column(db.Integer,  primary_key=True,
 #                    nullable=False, autoincrement=True)
-#     studentID = db.Column(db.Integer, ForeignKey(User.studentID))
+#     user_id = db.Column(db.Integer, ForeignKey(User.studentID))
 #     used = db.Column(db.Integer, default = '0')
 #     finish_time = db.Column(db.DateTime, default=datetime.utcnow)
 
-#     def __init__(self,studentID,used):
-#         self.studentID = studentID
+#     def __init__(self,user_id,used):
+#         self.user_id = studentID
 #         self.used = used
 #         self.finish_time = finish_time
 
@@ -65,7 +65,7 @@ class Post(db.Model):
 #     reservationID = db.Column(db.Integer,  primary_key=True,
 #                    nullable=False, autoincrement=True)
 #     seatNum = db.Column(db.Integer, ForeignKey(Seat.seatNum), nullable=False)
-#     studentID = db.Column(db.String(255), nullable=False)
+#     user_id = db.Column(db.String(255), nullable=False)
 #     reserved_time = db.Column(db.DateTime, default=datetime.utcnow)
 #     starttime = db.Column(db.DateTime, default=datetime.utcnow)
 #     finishtime = db.Column(db.DateTime, default=datetime.utcnow)
