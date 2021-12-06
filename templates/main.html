@@ -1,26 +1,30 @@
+<!--
+    created by 최고운 11.16 html,css 틀 작성(미완)
+-->
+
 {% extends 'base.html' %}
 {% block scripts %}
 <script>
-    function reserve_confirm() {
+    /*function reserve_confirm() {
         let seatNum = $("#seatNum").val()
-        let studentID = $("#studentID").val()
+        let user_ID = $("#user_ID").val()
         let reserved_time = $("#reserved_time").val()
         let starttime = $("#starttime").val()
         let finishtime = $("#finishtime").val()
 
         $.ajax({
             url: '/main',
-            type: 'post',
+            type: 'get',
             data: {
                 'seatNum': seatNum,
-                'studentID': studentID,
+                'user_ID': user_ID,
                 'reserved_time': reserved_time,
                 'starttime': starttime,
                 'finishtime': finishtime
             },
         })
 
-    }
+    }*/
 </script>
 {% endblock %}
 
@@ -38,13 +42,15 @@
         </tr>
         </thead>
         <tbody>
+        {% for list in reserve_list %}
         <tr>
-            <td id="seatNum" scope="row">{{reserve_list.seatNum}}</td>
-            <td id="studentID" scope="row">{{reserve_list.studentID}}</td>
-            <td id="reserved_time" scope="row">{{reserve_list.reserved_time}}</td>
-            <td id="starttime" scope="row">{{reserve_list.starttime}}</td>
-            <td id="finishtime" scope="row">{{reserve_list.finishtime}}</td>
+            <td id="seatNum" scope="row">{{ list[0] }}</td>
+            <td id="user_ID" scope="row">{{ list[1] }}</td>
+            <td id="reserved_time" scope="row">{{ list[2] }}</td>
+            <td id="starttime" scope="row">{{ list[3] }}</td>
+            <td id="finishtime" scope="row">{{ list[4] }}</td>
         </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>
