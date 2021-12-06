@@ -1,3 +1,7 @@
+# 파일 실행, DB 위치 관련 파일
+
+# created by 장지욱 11.09
+
 import pymysql
 from flask import Flask
 from api import board
