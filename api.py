@@ -149,7 +149,7 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
         return redirect("/")
 
 
-# 예약 기능 구현(미완)
+# # 예약 기능 구현(미완)
 # @board.route('/reserve',methods=["GET","POST"])
 # def reserve():
 #     if session.get("login") is None:
@@ -157,12 +157,20 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
 #             return render_template('reserve.html')
 #         else:
 #             seatNum = request.form['seatNum']
-#             studentID = request.form['studentID']
+
+#             #기존의 좌석이 차있으면 AlreadySeat json형태로 보냄
+#             seat_check = Seat.query.filter(Seat.seatNum == seatNum).first()
+#             if seat_check.used != 0:
+#                 return jsonify({"result":"AlreadySeat"})
+            
+#             #다른 좌석을 이미 예약을 했으면 TwoReserveImpossible
+
+#             user_id = request.form['user_id']
 #             reserved_time = request.form['reserved_time']
 #             starttime = request.form['starttime']
 #             finishtime = request.form['finishtime']
 
-#             reserve = Reservation(seatNum,studentID,reserved_time,starttime,finishtime)
+#             reserve = Reservation(seatNum,user_id,reserved_time,starttime,finishtime)
 
 #             db.session.add(reserve)
 #             db.session.commit()
@@ -170,12 +178,12 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
 #     else:
 #         return redirect("/")
 
-# 예약 수정
+# # 예약 수정 (미완)
 # @board.route("/reserve", methods=["PATCH"])
 # def update_reserve(): #본인의 예약내용을 수정할 수 있게 하고, DB에도 그 수정사항을 반영한다.
 #     pass
 
-# 예약 삭제
+# # 예약 삭제 (미완)
 # @board.route("/reserve", methods=["DELETE"])
 # def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB에도 삭제한다.
 #     pass
