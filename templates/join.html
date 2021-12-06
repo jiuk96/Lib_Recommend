@@ -32,6 +32,16 @@ modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선�
             return;
         }
 
+        if (userphone == '') {
+            alert("핸드폰 번호를 입력 해 주세요");
+            return;
+        }
+
+        if (useremail == '') {
+            alert("이메일을 입력 해 주세요");
+            return;
+        }
+
         $.ajax({
             url: '/join',
             type: 'post',
@@ -53,7 +63,7 @@ modified by 최고운 12.4 좌석 선호 조건 체크박스 수정, 좌석 선�
                 }
                 if (res['result'] == 'alreadyID') {
                     alert("아이디가 이미 있습니다! 다시 회원가입을 시도하세요");
-                    window.location.href = '/'
+                    window.location.href = '/join'
                 }
             }
         })
