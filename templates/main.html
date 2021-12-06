@@ -44,11 +44,12 @@
         <tbody>
         {% for list in reserve_list %}
         <tr>
-            <td id="seatNum" scope="row">{{ list[0] }}</td>
-            <td id="user_ID" scope="row">{{ list[1] }}</td>
-            <td id="reserved_time" scope="row">{{ list[2] }}</td>
-            <td id="starttime" scope="row">{{ list[3] }}</td>
-            <td id="finishtime" scope="row">{{ list[4] }}</td>
+            <!-- 이게 저도 잘 몰랐는데, 그 list.변수이름을 적어주면 되더라고요! -->
+            <td id="seatNum" scope="row">{{ list.seatNum }}</td>
+            <td id="user_ID" scope="row">{{ list.user_id }}</td>
+            <td id="reserved_time" scope="row">{{ list.reserved_time }}</td>
+            <td id="starttime" scope="row">{{ list.starttime }}</td>
+            <td id="finishtime" scope="row">{{ list.finishtime }}</td>
         </tr>
         {% endfor %}
         </tbody>
