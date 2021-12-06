@@ -1,6 +1,119 @@
 {% extends 'base.html' %}
+{% block scripts %}
+<script>
+    function reserve_confirm() {
+        let seatNum = $("#seatNum").val()
+        let studentID = $("#studentID").val()
+        let reserved_time = $("#reserved_time").val()
+        let starttime = $("#starttime").val()
+        let finishtime = $("#finishtime").val()
+
+        $.ajax({
+            url: '/main',
+            type: 'post',
+            data: {
+                'seatNum': seatNum,
+                'studentID': studentID,
+                'reserved_time': reserved_time,
+                'starttime': starttime,
+                'finishtime': finishtime
+            },
+        })
+
+    }
+</script>
+{% endblock %}
+
 {% block content %}
-<div class="main">
-    <p>여기에 좌석 예약현황 구현하면 됩니다.</p>
+<h1>나의 예약 현황</h1>
+<div class="card">
+    <table class="table-primary">
+        <thead>
+        <tr>
+            <td id="b" scope="col">좌석 번호</td>
+            <td scope="col">예약자</td>
+            <td scope="col">예약 시간</td>
+            <td scope="col">좌석 이용 시작 시간</td>
+            <td id="a" scope="col">좌석 이용 종료 시간</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="seatNum" scope="row">{{seatNum}}</td>
+            <td id="studentID" scope="row">{{studentID}}</td>
+            <td id="reserved_time" scope="row">{{reserved_time}}</td>
+            <td id="starttime" scope="row">{{starttime}}</td>
+            <td id="finishtime" scope="row">{{finishtime}}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+<br>
+<div id="bt">
+    <button id="ext" class="btn btn-primary" onclick=extend()>예약 연장하기</button>
+    <button id="can" class="btn btn-primary" onclick=cancel()>예약 취소하기</button>
+    <a class="btn btn-primary"  href="/reserve" >좌석 예약하기</a>
+</div>
+
+
+{% endblock %}
+{% block style %}
+<style>
+    h1{
+        text-align: center;
+        font-size:30px;
+        margin-bottom:20px;
+    }
+    .table-primary{
+        margin:auto;
+        margin-top:0px;
+        margin-bottom: 0px;
+        width:650px;
+        border-radius: 20px;
+    }
+    tr{
+        text-align: center;
+    }
+    thead{
+        height:60px;
+        border-bottom:solid 1px rgba(0, 0, 0, 0.082) ;
+    }
+    tbody{
+        height:80px;
+    }
+    .card{
+        margin:auto;
+        border-radius: 20px;
+        width:650px;
+    }
+    td:not(#finishtime, #a){
+        border-right:solid 1px rgba(0, 0, 0, 0.082);
+    }
+    #bt{
+        text-align: center;
+    }
+    #bt a{
+        width:650px;
+        height: 50px;
+        padding: 0;
+        line-height: 50px;
+        background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+        border:none;
+        border-radius: 15px;
+        margin-top:40px;
+        margin-bottom: 100px;
+    }
+    #bt button{
+        width:304px;
+        height: 50px;
+        padding: 0;
+        line-height: 50px;
+        background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+        border:none;
+        border-radius: 15px;
+    }
+    #ext{
+        margin-right:38px;
+    }
+</style>
 {% endblock %}
