@@ -1,7 +1,9 @@
 # ORM 방식으로 데이터베이스에 객체를 통해 접근 (SQL 질의어 없이도 데이터베이스 접근 가능)
 # 아래의 코드에서 각 클래스의 이름은 DB의 테이블과 매핑하여 사용한다.
 
-# created by 장지욱 11.09
+# created by 장지욱 11.09 
+# modified by 장지욱 11.16 - User, Post 클래스 구현
+#                   11.25 - Seat, Reservation 클래스 구현
 
 from sqlalchemy.sql.schema import ForeignKey
 from db_connect import db
@@ -22,7 +24,7 @@ class User(db.Model):
     door = db.Column(db.Integer, default = 0)
 
     def __init__(self,username,user_id,user_pw,userphone,useremail,distance,acheater,windownear,door):
-    # ):
+    
         self.username = username
         self.user_id = user_id
         self.user_pw = user_pw
@@ -56,6 +58,7 @@ class Post(db.Model):
 #     def __init__(self,studentID,used):
 #         self.studentID = studentID
 #         self.used = used
+#         self.finish_time = finish_time
 
 # class Reservation(db.Model):
 #     __tablename__ = 'reseration'
