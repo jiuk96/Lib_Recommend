@@ -1,26 +1,48 @@
 <!--
     created by 최고운 11.16 html,css 틀 작성(미완)
-    modified by 최고운 css 수정
+    modified by 최고운 css 수정, 테이블 변경, 테이블 내 삭제 버튼 추가, 현재 시간 출력, 버튼 수정
 -->
 
 {% extends 'base.html' %}
 {% block scripts %}
-<script>
 
-</script>
 {% endblock %}
 
 {% block content %}
 <h1>나의 예약 현황</h1>
-<div class="card">
-    <table class="table-primary">
+<br>
+<p id="clock"></p>
+<script> /*현재 시간 출력*/
+    var Target = document.getElementById("clock");
+    function clock() {
+        var time = new Date();
+
+        var month = time.getMonth();
+        var date = time.getDate();
+        var day = time.getDay();
+        var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var seconds = time.getSeconds();
+
+        Target.innerText = '현재 시간 : ' +
+        `${month + 1}월 ${date}일 ${week[day]}요일 ` +
+        `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+            
+    }
+    clock();
+    setInterval(clock, 1000); // 1초마다 실행
+</script>
+<div>
+    <table  class="table-primary">
         <thead>
         <tr>
             <td id="b" scope="col">좌석 번호</td>
             <td scope="col">예약자</td>
-            <td scope="col">예약 시간</td>
             <td scope="col">좌석 이용 시작 시간</td>
             <td id="a" scope="col">좌석 이용 종료 시간</td>
+            <td scope="col">예약 삭제</td>
         </tr>
         </thead>
         <tbody>
@@ -29,9 +51,10 @@
             <!-- 이게 저도 잘 몰랐는데, 그 list.변수이름을 적어주면 되더라고요! -->
             <td id="seatNum" scope="row">{{ list.seatNum }}</td>
             <td id="user_ID" scope="row">{{ list.user_id }}</td>
-            <td id="reserved_time" scope="row">{{ list.reserved_time }}</td>
             <td id="starttime" scope="row">{{ list.starttime }}</td>
             <td id="finishtime" scope="row">{{ list.finishtime }}</td>
+            <!--정현님 이 부분↓ onclick이나 다른거 추가하셔서 삭제되게 구현해주세요!-->
+            <td id="reserved_time" scope="row"><button id="del" class="btn btn-primary">삭제</button></td> 
         </tr>
         {% endfor %}
         </tbody>
@@ -39,8 +62,9 @@
 </div>
 <br>
 <div id="bt">
+    <!--reserve.html에서 변경을 처리할 때 자바스크립트 도움 필요하면 아래처럼 버튼 형식-->
+    <!--자바스크립트 도움 필요 없으면 a태그로 변경해서 href를 reserve로-->
     <button id="ext" class="btn btn-primary" onclick=change()>예약 변경하기</button>
-    <button id="can" class="btn btn-primary" onclick=cancel()>예약 취소하기</button>
     <a class="btn btn-primary"  href="/reserve" >좌석 예약하기</a>
 </div>
 
@@ -48,6 +72,9 @@
 {% endblock %}
 {% block style %}
 <style>
+    main{
+        width:720px;
+    }
     h1{
         text-align: center;
         font-size:30px;
@@ -59,41 +86,53 @@
         margin-bottom: 0px;
         width:720px;
         border-radius: 20px;
+        border-collapse: collapse;
+        border-style: hidden;
+        box-shadow:0 0 0 1px rgba(0, 0, 0, 0.082);
+
     }
     tr{
         text-align: center;
     }
     thead{
         height:60px;
-        border-bottom:solid 1px rgba(0, 0, 0, 0.082) ;
+        border-bottom:solid 1px rgba(0, 0, 0, 0.082);  
+    }
+    thead td:not(#b){
+        border-left:solid 1px rgba(0, 0, 0, 0.082);
     }
     tbody{
         height:80px;
     }
-    thead td, tbody td{
-        padding:10px;
+    tbody td{
+        height: 60px;
+        border-top:solid 1px rgba(0, 0, 0, 0.082);
     }
+    tbody td:not(#seatNum){
+        border-left:solid 1px rgba(0, 0, 0, 0.082);
+    }
+
     .card{
         margin:auto;
         border-radius: 20px;
         width:720px;
     }
-    td:not(#finishtime, #a){
-        border-right:solid 1px rgba(0, 0, 0, 0.082);
+    #del{
+        background-color: #d0d1d1;
+        border:none;
     }
     #bt{
         text-align: center;
+        margin-bottom: 110px;
     }
     #bt a{
-        width:650px;
+        width:304px;
         height: 50px;
         padding: 0;
         line-height: 50px;
         background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
         border:none;
         border-radius: 15px;
-        margin-top:25px;
-        margin-bottom: 110px;
     }
     #bt button{
         width:304px;
