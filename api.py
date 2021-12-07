@@ -151,58 +151,58 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
             data = Reservation.query.filter(Reservation.user_id == session['login']).all()
             now = datetime.now()
             for i in range(len(data)):
-                if data[i].starttime > now:
+                if data[i].finishtime > now:
                     new_data.append(data[i]) 
             return render_template("main.html", reserve_list = new_data)
     else:
         return redirect("/")
 
 
-# 예약 기능 구현 (test x)
-@board.route('/reserve',methods=["GET","POST"])
-def reserve():
-    if session.get("login") is None:
-        if request.method == "GET":
-            #좌석 추천 알고리즘을 여기다 넣어도 될거같기도...
-            return render_template('reserve.html')
-        else:
-            now = datetime.now()
-            seatNum = request.form['seatNum']
-            user_id = request.form['user_id']
-            reserved_time = request.form['reserved_time']
-            starttime = request.form['starttime']
-            finishtime = request.form['finishtime']
+# # 예약 기능 구현 (test x)
+# @board.route('/reserve',methods=["GET","POST"])
+# def reserve():
+#     if session.get("login") is None:
+#         if request.method == "GET":
+#             #좌석 추천 알고리즘을 여기다 넣어도 될거같기도...
+#             return render_template('reserve.html')
+#         else:
+#             now = datetime.now()
+#             seatNum = request.form['seatNum']
+#             user_id = request.form['user_id']
+#             reserved_time = request.form['reserved_time']
+#             starttime = request.form['starttime']
+#             finishtime = request.form['finishtime']
 
-            #사용 시간은 무조건 지금보다는 앞에 해야한다.
-            if starttime > now: 
-                return jsonify({"result":"NoReserve"}) # 사용시간이 지금 시각보다 늦은경우
+#             #사용 시간은 무조건 지금보다는 앞에 해야한다.
+#             if starttime > now: 
+#                 return jsonify({"result":"NoReserve"}) # 사용시간이 지금 시각보다 늦은경우
 
-            #끝나는 시간이 시작시간보다 더 앞이면 알람경고
-            if starttime > finishtime: 
-                return jsonify({"result":"starttimeFirst"}) 
+#             #끝나는 시간이 시작시간보다 더 앞이면 알람경고
+#             if starttime > finishtime: 
+#                 return jsonify({"result":"starttimeFirst"}) 
 
-            #하루이상 넘어가는 예약은 불가능하다..
-            if starttime.day != finishtime.day:
-                return jsonify({"result":"OnedayOnly"})
+#             #하루이상 넘어가는 예약은 불가능하다..
+#             if starttime.day != finishtime.day:
+#                 return jsonify({"result":"OnedayOnly"})
 
-            #유저가 다른 좌석을 그 당일 이미 예약했으면 다른 자리 불가 TwoReserveImpossibleAtSameDay
-            user_timecheck = Reservation.query.filter(Reservation.user_id==user_id).all()
-            for i in range(len(user_timecheck)):
-                if user_timecheck[i].starttime.day == starttime.day:
-                    return jsonify({"result":"TwoReserveImpossibleAtSameDay"})
+#             #유저가 다른 좌석을 그 당일 이미 예약했으면 다른 자리 불가 TwoReserveImpossibleAtSameDay
+#             user_timecheck = Reservation.query.filter(Reservation.user_id==user_id).all()
+#             for i in range(len(user_timecheck)):
+#                 if user_timecheck[i].starttime.day == starttime.day:
+#                     return jsonify({"result":"TwoReserveImpossibleAtSameDay"})
 
-            # 좌석예약하려는 시간에 예약이 있는 경우 AlreadySeat json형태로 보냄
-            reserve_data = Reservation.query.filter(Reservation.seatNum == seatNum, Reservation.starttime >= now).all()
-            for i in range(len(reserve_data)):
-                if (starttime < reserve_data[i].starttime < finishtime) or (starttime < reserve_data[i].finishtime < finishtime) or (starttime<reserve_data[i].starttime and finishtime>reserved_time[i].finishtime):
-                    return jsonify("result":"AlreadySeat")
+#             # 좌석예약하려는 시간에 예약이 있는 경우 AlreadySeat json형태로 보냄
+#             reserve_data = Reservation.query.filter(Reservation.seatNum == seatNum, Reservation.starttime >= now).all()
+#             for i in range(len(reserve_data)):
+#                 if (starttime < reserve_data[i].starttime < finishtime) or (starttime < reserve_data[i].finishtime < finishtime) or (starttime<reserve_data[i].starttime and finishtime>reserved_time[i].finishtime):
+#                     return jsonify("result":"AlreadySeat")
 
-            reserve = Reservation(seatNum,user_id,reserved_time,starttime,finishtime)
-            db.session.add(reserve)
-            db.session.commit()
-            return jsonify({"result":"success"})
-    else:
-        return redirect("/")
+#             reserve = Reservation(seatNum,user_id,reserved_time,starttime,finishtime)
+#             db.session.add(reserve)
+#             db.session.commit()
+#             return jsonify({"result":"success"})
+#     else:
+#         return redirect("/")
 
 # # 예약 수정 (test x)
 # @board.route("/reserve", methods=["PATCH"])
