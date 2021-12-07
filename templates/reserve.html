@@ -1,30 +1,185 @@
-<!--일단 인터넷에서 비슷해보이는거 긁어온거라 이 부분은 api랑 연결되는거 없어요!-->
-
+<!--
+    created by 최고운 html틀 작성, css 작성
+-->
+<!--
+    *좌석 색깔*
+    이용 가능 좌석 : #a0c2f5
+    이용 불가능 좌석 : #c5c6c7
+    추천 좌석 : #c8b1f3
+    구조물 : 
+-->
 {% extends 'base.html' %}
+
+{% block scripts %}
+<script>
+    /*함수 구현하기*/
+    function Reserve(){
+
+    }
+</script>
+{% endblock %}
 {% block content %}
-<h1 align="center">Demo 2 : Client auto mode</h1>
-    <ul>
-        <li>사용자 모드에서는 좌석의 선택만 가능</li>
-        <li>.cinema-seat-area에 data-mode="client"로 설정하거나 미작성 시 사용자 모드 설정</li>
-        <li>좌석번호를 표시하고 싶은 경우 .cinema-seat-area에 data-seatno="visible"로 설정</li>
-        <li>좌석번호는 현재 임의의 수정이 불가</li>
-        <li>좌석 열 수는 .cinema-seat-area에 data-rowsize로 설정</li>
-        <li>좌석 칸 수는 .cinema-seat-area에 data-colsize로 설정</li>
-    </ul>
-    <div class="float-box">
-        <div>
-            <form action="example.html" method="get">
-                <div id="cinema" class="cinema-wrap" data-name="seat">
-                    <div class="cinema-seat-area" data-rowsize="3" data-colsize="5" data-mode="client" data-fill="auto" data-seatno="visible"></div>
-                </div>
-        
-                <input type="submit" value="선택">
-            </form>
+<h2>좌석 예약</h2>
+<br>
+<!--이용 시작 시간이 현재가 아니면 선택한 이용 시작 시간대의 예약 현황을 좌석현황에 불러와야함 -->
+<!--입력값 받기-->
+<label id="starttime">이용 시작 시간 <input type="datetime-local"></label>
+<label id="finishtime">이용 종료 시간 <input type="datetime-local"></label>
+
+<div id="reserve-wrapper">
+    <button id="door" class="btn btn-primary" disabled>출입문</button>
+    <button id="window1" class="btn btn-primary" disabled>창문</button>
+
+    <!--예약 불가 좌석 선택 불가능하도록 커서 모양을 조절하거나 .. disabled를 주고 색을 바꾸거나-->
+    <div id="table-wrapper">
+        <div id="line1">
+            <table>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve() style="background-color:#c8b1f3 ;">1</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve() style="background-color:#c5c6c7 ;" >5</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>2</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>6</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>3</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>7</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>4</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>8</button></td>
+                </tr>
+            </table>
         </div>
-
-        <h2 align="center">전송되는 데이터 형태</h2>
-        <div class="result">
-
+        <div id="line2">
+            <table>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>9</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>13</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>10</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>14</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>11</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>15</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>12</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>16</button></td>
+                </tr>
+            </table>
+        </div>
+        <div id="line3">
+            <table>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>17</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>21</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>18</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>22</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>19</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>23</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve()>20</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve()>24</button></td>
+                </tr>
+            </table>
         </div>
     </div>
+    <button id="window2" class="btn btn-primary" disabled>창문</button>
+    <button id="window3" class="btn btn-primary" disabled>창문</button>
+    <button id="window4" class="btn btn-primary" disabled>창문</button>
+    <button id="acheater" class="btn btn-primary" disabled>히터</button>
+    
+</div>
+
+{% endblock %}
+{% block style %}
+<style>
+    #starttime, #finishtime{
+        display: block;
+    }
+    #starttime input, #finishtime input{
+        height:35px;
+        border:2px solid rgba(0, 0, 0, 0.125);
+        border-radius: 7px;
+        padding:10px;
+        margin-left:15px;
+    }
+    #starttime{
+        margin-bottom: 10px;
+    }
+    #finishtime{
+        margin-bottom: 20px;
+    }
+    #reserve-wrapper{
+        width:1000px;
+        padding:50px;
+        border:1px solid rgba(0, 0, 0, 0.082);
+        border-radius: 10px;
+        margin: auto;
+    }
+    #door, #window1, #window2, #window3, #window4, #acheater{
+        display:inline;
+        width:70px;
+        height:35px;
+        background-color: #565757;
+    }
+    #window3, #window4{
+        margin-left:90px;
+        margin-right:90px;
+    }
+    #window1{
+        float: left;
+    }
+    #window2{
+        position: relative;
+        float: left;
+        bottom:105px;
+    }
+    #door{
+        float:right;
+    }
+    #acheater{
+        float: right;
+    }
+    main{
+        width:1000px;
+        text-align: center;
+        margin-bottom: 110px;
+    }
+    #line1, #line2, #line3{
+        width:250px;
+        display: inline-block;
+        text-align: center;
+    }
+    table{
+        margin:auto;
+        border-collapse: separate;
+        border-spacing: 30px;
+    }
+    h1{
+        text-align: center;
+    }
+    #table-wrapper{
+        margin:auto;
+    }
+    .btn-primary{
+        background-color: #a0c2f5;
+        border:none;
+        width:50px;
+        height: 35px;
+    }
+    .btn-primary:hover{
+        background-color: #a0c2f5;
+        border:none;
+    }
+</style>
 {% endblock %}
