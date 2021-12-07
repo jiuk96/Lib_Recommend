@@ -1,4 +1,5 @@
 # 2021-12-05 이종은 작성
+# 2021-12-07 이종은 수정(recommend 함수 등)
 
 class Seat: # 좌석 클래스
     def __init__(self, num, group): # Seat의 parameter: num(좌석 번호), group(분단 번호)
@@ -11,7 +12,7 @@ class Seat: # 좌석 클래스
     # 멤버함수 목록
     def use(self): # 좌석 이용 시작
         self.state = True
-        self.sign = 'o'
+        self.sign = '@'
 
     def end(self): # 좌석 이용 종료
         self.state = False
@@ -24,29 +25,58 @@ class Prefer: # 선호 정보 클래스
         self.window = window # 창문 # True면 창문 먼 좌석을 원함
         self.door = door # 문 # True면 출입구 먼 좌석을 원함
 
-def res(seat, time): # 좌석 예약
-    # 주어진 time이 되면 자동으로 use 함수 쓸 수 있도록 설계
-    seat.use()
-    # 개발 중
-
-def recommend(entireSeat, prefer): # 좌석 추천 # parameter 중 prefer는 Prefer 클래스 # entireSeat는 좌석 현황(parameter로 안 주어지고 전역 변수 바로 변경하도록 수정할 수도 있음)
+def recommend(prefer): # 좌석 추천 # parameter 중 prefer는 Prefer 클래스
     reclist = [x for x in range(1, 25)]
 
-    if prefer.distance: # 거리두기(기준 좌석 근처의 state가 True면 추천 안 함)
-        # 개발 중
-        print(1)
+    if prefer.distance: # Prefer 클래스의 distance가 True면 조건문이 실행됨
+        for i in range(1, 25):
+            if (i==1) and (seatlist[i].state == True):
+                for k in [i, i+1, i+4, i+5]:
+                    if k in reclist: reclist.remove(k)
 
+            if (i==2 or i==3) and (seatlist[i].state == True):
+                for k in [i-1, i, i+1, i+3, i+4, i+5]:
+                    if k in reclist: reclist.remove(k)
+
+            if (i==4) and (seatlist[i].state == True):
+                for k in [i-1, i, i+3, i+4]:
+                    if k in reclist: reclist.remove(k)
+
+            if (i==5 or i==9 or i==13 or i==17) and (seatlist[i].state == True):
+                for k in [i-4, i-3, i, i+1, i+4, i+5]:
+                    if k in reclist: reclist.remove(k)
+
+            if (i==6 or i==7 or i==10 or i==11 or i==14 or i==15 or i==18 or i==19) and (seatlist[i].state == True):
+                for k in [i-5, i-4, i-3, i-1, i, i+1, i+3, i+4, i+5]:
+                    if k in reclist: reclist.remove(k)
+
+            if (i==8 or i==12 or i==16 or i==20) and (seatlist[i].state == True):
+                for k in [i-5, i-4, i-1, i, i+3, i+4]:
+                    if k in reclist: reclist.remove(k)
+                
+            if (i==21) and (seatlist[i].state == True):
+                for k in [i-4, i-3, i+1]:
+                    if k in reclist: reclist.remove(k)
+            
+            if (i==22 or i==23) and (seatlist[i].state == True):
+                for k in [i-5, i-4, i-3, i-1, i, i+1]:
+                    if k in reclist: reclist.remove(k)
+
+            if (i==24) and (seatlist[i].state == True):
+                for k in [i-5, i-4, i-1, i]:
+                    if k in reclist: reclist.remove(k)
+               
     if prefer.acheater:
         for k in [19, 20, 23, 24]:
             if k in reclist:
                 reclist.remove(k)
 
-    if perfer.window:
+    if prefer.window:
         for k in [1, 2, 3, 4, 8, 12, 16, 20, 24]:
             if k in reclist:
                 reclist.remove(k)
     
-    if perfer.door:
+    if prefer.door:
         for k in [17, 18, 21, 22]:
             if k in reclist:
                 reclist.remove(k)
@@ -62,15 +92,13 @@ for i in range(1, 25):
         globals()['seat{}'.format(i)] = Seat(i, 3)
 
 # 알고리즘 만들면서 시각적으로 확인하기 위해
-seat1.use()
-seat3.use()
+seat6.use()
+seat15.use()
+seat21.use()
 print(f"{seat1.sign}{seat1.num}{seat1.sign} {seat5.sign}{seat5.num}{seat5.sign}   {seat9.sign}{seat9.num}{seat9.sign}  {seat13.sign}{seat13.num}{seat13.sign}   {seat17.sign}{seat17.num}{seat17.sign} {seat21.sign}{seat21.num}{seat21.sign}")
 print(f"{seat2.sign}{seat2.num}{seat2.sign} {seat6.sign}{seat6.num}{seat6.sign}   {seat10.sign}{seat10.num}{seat10.sign} {seat14.sign}{seat14.num}{seat14.sign}   {seat18.sign}{seat18.num}{seat18.sign} {seat22.sign}{seat22.num}{seat22.sign}")
 print(f"{seat3.sign}{seat3.num}{seat3.sign} {seat7.sign}{seat7.num}{seat7.sign}   {seat11.sign}{seat11.num}{seat11.sign} {seat15.sign}{seat15.num}{seat15.sign}   {seat19.sign}{seat19.num}{seat19.sign} {seat23.sign}{seat23.num}{seat23.sign}")
 print(f"{seat4.sign}{seat4.num}{seat4.sign} {seat8.sign}{seat8.num}{seat8.sign}   {seat12.sign}{seat12.num}{seat12.sign} {seat16.sign}{seat16.num}{seat16.sign}   {seat20.sign}{seat20.num}{seat20.sign} {seat24.sign}{seat24.num}{seat24.sign}")
-
-### 메모
-# 거리두기 등 고려하는 알고리즘 설계 시 규칙 이용 가능
-# ex) 기준 좌석 k의 왼쪽은 k-4 오른쪽은 k+4
-# ex) 위에서 1번째 줄은 k % 4 == 1. 2번째 줄은 k % 4 == 2.
-# ex) k % 4 == 0이면 위에서 마지막 줄(if k % 4 ==인 경우 밑에 좌석(5번)과의 거리두기를 신경 안 써도 되게 설계)
+seatlist = [0, seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8, seat9, seat10, seat11, seat12, seat13, seat14, seat15, seat16, seat17, seat18, seat19, seat20, seat21, seat22, seat23, seat24]
+prefer1 = Prefer(distance=True, acheater=False, window=False, door=True)
+print(f"추천 좌석: {recommend(prefer1)}")
