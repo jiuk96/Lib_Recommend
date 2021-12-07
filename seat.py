@@ -1,5 +1,5 @@
-# 2021-12-05 이종은 작성
-# 2021-12-07 이종은 수정(recommend 함수 등)
+# 2021-11-15 이종은 작성
+# 2021-11-16 ~ 2021-12-07 이종은 수정
 
 class Seat: # 좌석 클래스
     def __init__(self, num, group): # Seat의 parameter: num(좌석 번호), group(분단 번호)
