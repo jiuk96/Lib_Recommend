@@ -24,6 +24,12 @@ bcrypt = Bcrypt(app)
 sched = BackgroundScheduler(daemon=True)
 sched.start()
 
+# 매일 밤 12시가 되면 Seat 테이블 정보를 초기화 해준다. 
+@sched.scheduled_job('cron', hour='0', minute='00', id='test_1')
+def seat_initailze_atnight():
+    with app.app_context():
+        seat_initialize()
+
 # 매 30분마다 코드 자동실행하여 Seat 테이블 정보 최신화해주기 (07:00~22:30분까지 30분 주기로 체크)
 @sched.scheduled_job('cron', hour='7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22', minute='30,00', id='test_2')
 def seat_update_every_30minutes():
