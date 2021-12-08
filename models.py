@@ -55,7 +55,8 @@ class Seat(db.Model):
      used = db.Column(db.Integer, default = '0')
      finish_time = db.Column(db.DateTime, default=datetime.utcnow)
 
-     def __init__(self,user_id,used,finish_time):
+     def __init__(self,seatNum,user_id,used,finish_time):
+         self.seatNum = seatNum
          self.user_id = user_id
          self.used = used
          self.finish_time = finish_time
