@@ -78,6 +78,26 @@ class Reservation(db.Model):
          self.finishtime = finishtime
 
 # 아래는 테이블 작성했던 sql문입니다. 추후 수정사항이 생길 수도 있습니다. - 장지욱
+# create table User (
+#     studentID INT NOT NULL AUTO_INCREMENT,
+#     username char(10) NOT NULL,
+#     user_id char(20) NOT NULL UNIQUE,
+#     user_pw char(100) NOT NULL,
+#     userphone char(30) NOT NULL,
+#     useremail char(50) NOT NULL,
+#     distance INT,
+#     acheater INT,
+#     windownear INT,
+#     door INT,
+#     PRIMARY KEY(studentID));
+
+# create table Post (
+#     id INT NOT NULL AUTO_INCREMENT,
+#     author char(50) not null,
+#     content TEXT,
+#     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     PRIMARY KEY(id));
+
 # create table Reservation (
 #     reservationID INT NOT NULL AUTO_INCREMENT,
 #     seatNum INT NOT NULL,
