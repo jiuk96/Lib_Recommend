@@ -1,10 +1,31 @@
 <!--
     created by 최고운 11.16 html,css 틀 작성(미완)
     modified by 최고운 css 수정, 테이블 변경, 테이블 내 삭제 버튼 추가, 현재 시간 출력, 버튼 수정
+    modified by 신정현 예약삭제 ajax  추가
 -->
 
 {% extends 'base.html' %}
 {% block scripts %}
+<script>
+  function deleteReserve(reservationID, seatNum, user_id) {
+      $.ajax({
+          url: '/main',
+          type: 'DELETE',
+          data: {
+              'reservationID' : reservationID,
+              'seatNum' : seatNum,
+              'user_id' : user_id
+          },
+          success: function (res) {
+              if (res['result'] == 'success') {
+                  alert("삭제 성공!")
+                  window.location.reload()
+              } else {
+                  alert("삭제 실패!")
+              }
+          }
+      })
+  }
 
 {% endblock %}
 
@@ -53,8 +74,7 @@
             <td id="user_ID" scope="row">{{ list.user_id }}</td>
             <td id="starttime" scope="row">{{ list.starttime }}</td>
             <td id="finishtime" scope="row">{{ list.finishtime }}</td>
-            <!--정현님 이 부분↓ onclick이나 다른거 추가하셔서 삭제되게 구현해주세요!-->
-            <td id="reserved_time" scope="row"><button id="del" class="btn btn-primary">삭제</button></td> 
+            <td id="reserved_time" scope="row"><button id="del" class="btn btn-primary" onclick="deleteReserve('{{list.reservationID}}', '{{list.seatNum}}', '{{list.user_id}}')">삭제</button></td> 
         </tr>
         {% endfor %}
         </tbody>
