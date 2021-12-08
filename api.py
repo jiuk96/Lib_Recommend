@@ -7,6 +7,7 @@
 #                   11.24 - 예약 기능/수정/삭제 초안 구현
 #                   11.25 - 예약 중복 방지 기능 추가
 #                   11.28 - 예약 중복 방지 기능 수정 및 예약시 발생할 수 있는 오류사랑 방지 기능 추가
+#                   12.04 - 좌석 실시간 정보 업데이트하기 Reservation 테이블에서 시작시간, 종료시간에 맞춰서 Seat 테이블 정보 변경해주기
 
 from flask import json, redirect, request, render_template, jsonify, Blueprint, session, g
 from models import User, Post, Reservation, Seat
@@ -148,6 +149,8 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
             new_data = []
             data = Reservation.query.filter(Reservation.user_id == session['login']).all()
             now = datetime.now()
+            seatInfooutput = db.session.query(Seat.user_id,Seat.finish_time,Seat.seatNum).filter(Seat.finish_time >= now).order_by(Seat.finish_time).all()
+            print(seatInfooutput)
             for i in range(len(data)):
                 if data[i].finishtime > now:
                     new_data.append(data[i]) 
@@ -257,21 +260,40 @@ def reserve():
 #         return jsonify({'result':'fail'})
 
 # 좌석 초기화 -> 매 오후 12시에 트리거를 걸어서 좌석 table을 초기화해주기
-# trigger를 걸어야한다.. starttime이 되면 좌석을 채워주기...
-# event가 자동으로 실행되도록 하기 위해서는 event_scheduler 변수를 on으로 설정해야함.
 
-# def seat_update():
-#     now = datetime.now()
-#     seatInfo = db.session.query(Reservation.user_id,Reservation.starttime,Reservation.finishtime,Reservation.seatNum).filter(Reservation.starttime >= now).order_by(Reservation.starttime).all()
-#     for i in range(len(seatInfo)):
-#         now = seatInfo[0][1]
-#         if now == seatInfo[i][1]:
-#             seatNum = seatInfo[i][3]
-#             user_id = seatInfo[i][0]
-#             finish_time = seatInfo[i][2]
-#             seat_update_data = Seat(seatNum,user_id,finish_time)
-#             db.session.add(seat_update_data)
-#             db.session.commit()
-#             print(seatNum)
 
-#     return "success"
+# 좌석 정보 업데이트하기 Reservation 테이블에서 시작시간에 맞춰서 Seat 테이블 정보 변경해주기
+def seat_update():
+    now = datetime.now()
+    temp_time = now.strftime('%Y-%m-%d %H:%M')
+    now = datetime.strptime(temp_time,'%Y-%m-%d %H:%M')
+    
+    # 유저가 사용시작시간이 되어 Seat 테이블을 최신화해주는 경우
+    seatInfoinput = db.session.query(Reservation.user_id,Reservation.starttime,Reservation.finishtime,Reservation.seatNum).filter(Reservation.starttime == now).order_by(Reservation.starttime).all()
+    if seatInfoinput is not None:
+        for i in range(len(seatInfoinput)):
+            data1 = Seat.query.filter(Seat.seatNum == seatInfoinput[i][3]).first()
+            user_id = seatInfoinput[i][0]
+            used = 1
+            finish_time = seatInfoinput[i][2]
+                
+            data1.user_id = user_id
+            data1.used = used
+            data1.finish_time = finish_time
+            db.session.commit()
+
+    # 유저가 사용이 끝나는 시간이 되어 Seat 테이블을 최신화 해주는 경우
+    seatInfooutput = db.session.query(Seat.user_id,Seat.finish_time,Seat.seatNum).filter(Seat.finish_time == now).order_by(Seat.finish_time).all()
+    if seatInfooutput is not None:
+        for j in range(len(seatInfooutput)):
+            data2 = Seat.query.filter(Seat.seatNum == seatInfooutput[j][2]).first()
+            user_id = ''
+            used = 0
+            finish_time = 0
+
+            data2.user_id = user_id
+            data2.used = used
+            data2.finish_time = finish_time
+            db.session.commit()
+
+    return "success"
