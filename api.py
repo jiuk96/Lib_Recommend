@@ -14,7 +14,7 @@ from models import User, Post, Reservation
 # Seat
 from db_connect import db
 from flask_bcrypt import Bcrypt
-from datetime import date, datetime, timedelta
+from datetime import datetime
 
 board = Blueprint('board',__name__)
 bcrypt = Bcrypt()
@@ -157,14 +157,14 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
     else:
         return redirect("/")
 
-
 # 예약 기능 구현 (test x)
 @board.route('/reserve', methods=['GET','POST'])
 def reserve():
     if session.get("login") is not None:
         if request.method == 'GET':
-            #좌석 추천 알고리즘을 여기다 넣어도 될거같기도...
-            return render_template('reserve.html')
+            # data = Seat.query.filter(Seat.user_id == session['login']).all() #좌석 정보 넘겨주기
+            # 좌석 추천 알고리즘을 여기다 넣어도 될거같기도...
+            return render_template('reserve.html') #, seat_list = data) # seat_list 현재 좌석 정보 넘겨주기
         else:
             now = datetime.now()
             seatNum = request.form['seatNum']
