@@ -112,5 +112,5 @@ class Reservation(db.Model):
 #     seatNum INT NOT NULL AUTO_INCREMENT,
 #     user_id VARCHAR(30),
 #     used INT DEFAULT '0',
-#     finish_time DATETIME DEFAULT = 0,
+#     finish_time DATETIME DEFAULT NULL,
 #     PRIMARY KEY(seatNum));
