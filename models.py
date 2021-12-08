@@ -53,7 +53,7 @@ class Seat(db.Model):
                     nullable=False, autoincrement=True)
      user_id = db.Column(db.String(30), nullable = False)
      used = db.Column(db.Integer, default = '0')
-     finish_time = db.Column(db.DateTime, default=datetime.utcnow)
+     finish_time = db.Column(db.DateTime, default= 0)
 
      def __init__(self,seatNum,user_id,used,finish_time):
          self.seatNum = seatNum
@@ -112,5 +112,5 @@ class Reservation(db.Model):
 #     seatNum INT NOT NULL AUTO_INCREMENT,
 #     user_id VARCHAR(30),
 #     used INT DEFAULT '0',
-#     finish_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     finish_time DATETIME DEFAULT = 0,
 #     PRIMARY KEY(seatNum));
