@@ -8,10 +8,8 @@
 #                   11.25 - 예약 중복 방지 기능 추가
 #                   11.28 - 예약 중복 방지 기능 수정 및 예약시 발생할 수 있는 오류사랑 방지 기능 추가
 
-from re import S
 from flask import json, redirect, request, render_template, jsonify, Blueprint, session, g
-from models import User, Post, Reservation
-# Seat
+from models import User, Post, Reservation, Seat
 from db_connect import db
 from flask_bcrypt import Bcrypt
 from datetime import datetime
@@ -244,7 +242,7 @@ def reserve():
 
 #     return jsonify({"result":"success"})
 
-# # 예약 삭제 (test x)
+# # 예약 삭제 (test x) 
 # @board.route("/reserve", methods=["DELETE"])
 # def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB에도 삭제한다.
 #     reservationID = request.form['reservationID']
@@ -258,4 +256,22 @@ def reserve():
 #     else:
 #         return jsonify({'result':'fail'})
 
+# 좌석 초기화 -> 매 오후 12시에 트리거를 걸어서 좌석 table을 초기화해주기
+# trigger를 걸어야한다.. starttime이 되면 좌석을 채워주기...
+# event가 자동으로 실행되도록 하기 위해서는 event_scheduler 변수를 on으로 설정해야함.
 
+# def seat_update():
+#     now = datetime.now()
+#     seatInfo = db.session.query(Reservation.user_id,Reservation.starttime,Reservation.finishtime,Reservation.seatNum).filter(Reservation.starttime >= now).order_by(Reservation.starttime).all()
+#     for i in range(len(seatInfo)):
+#         now = seatInfo[0][1]
+#         if now == seatInfo[i][1]:
+#             seatNum = seatInfo[i][3]
+#             user_id = seatInfo[i][0]
+#             finish_time = seatInfo[i][2]
+#             seat_update_data = Seat(seatNum,user_id,finish_time)
+#             db.session.add(seat_update_data)
+#             db.session.commit()
+#             print(seatNum)
+
+#     return "success"
