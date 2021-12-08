@@ -2,6 +2,7 @@
     created by 최고운 11.16 html,css 틀 작성(미완)
     modified by 최고운 css 수정, 테이블 변경, 테이블 내 삭제 버튼 추가, 현재 시간 출력, 버튼 수정
     modified by 신정현 예약삭제 ajax  추가
+    modified by 최고운 테이블 css수정
 -->
 
 {% extends 'base.html' %}
@@ -109,7 +110,6 @@
         border-collapse: collapse;
         border-style: hidden;
         box-shadow:0 0 0 1px rgba(0, 0, 0, 0.082);
-        border-bottom:solid 1px rgba(0, 0, 0, 0.082);
     }
     tr{
         text-align: center;
@@ -117,18 +117,15 @@
     thead{
         height:60px;  
     }
-
-    thead td:not(#b){
-        border-left:solid 1px rgba(0, 0, 0, 0.082);
+    tbody tr{
+        border-top:solid 1px rgba(0, 0, 0, 0.082);
     }
+
     tbody{
         height:80px;
     }
     tbody td{
         height: 60px;
-    }
-    tbody td:not(#seatNum){
-        border-left:solid 1px rgba(0, 0, 0, 0.082);
     }
 
     .card{
