@@ -245,19 +245,19 @@ def reserve():
 
 #     return jsonify({"result":"success"})
 
-# # 예약 삭제 (test x) 
-# @board.route("/reserve", methods=["DELETE"])
-# def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB에도 삭제한다.
-#     reservationID = request.form['reservationID']
-#     seatNum = request.form['seatNum']
-#     user_id = request.form['user_id']
-#     reserve_data = Reservation.query.filter(Reservation.reservationID == reservationID, Reservation.seatNum == seatNum, Reservation.user_id == user_id).first()
-#     if reserve_data is not None:
-#         db.session.delete(reserve_data)
-#         db.session.commit()
-#         return jsonify({'result':'success'})
-#     else:
-#         return jsonify({'result':'fail'})
+# 예약 삭제 
+ @board.route("/main", methods=["DELETE"])
+ def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB에도 삭제한다.
+     reservationID = request.form['reservationID']
+     seatNum = request.form['seatNum']
+     user_id = request.form['user_id']
+     reserve_data = Reservation.query.filter(Reservation.reservationID == reservationID, Reservation.seatNum == seatNum, Reservation.user_id == user_id).first()
+     if reserve_data is not None:
+         db.session.delete(reserve_data)
+         db.session.commit()
+         return jsonify({'result':'success'})
+     else:
+         return jsonify({'result':'fail'})
 
 # 좌석 초기화 -> 매 오후 12시에 트리거를 걸어서 좌석 table을 초기화해주기
 
