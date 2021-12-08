@@ -1,30 +1,52 @@
 <!--
     created by 최고운 html틀 작성, css 작성
+    modified by 최고운 좌석 이용 시간 선택 단위 30분 단위로 수정, 과거 날짜 선택 불가
 -->
 <!--
     *좌석 색깔*
     이용 가능 좌석 : #a0c2f5
     이용 불가능 좌석 : #c5c6c7
     추천 좌석 : #c8b1f3
-    구조물 : 
+    구조물 : #565757
 -->
 {% extends 'base.html' %}
 
+{% block head %}
+<!--datetimepicker 사용을 위한 플러그인 설치-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='jquery.datetimepicker.css') }}">
+<script src="{{ url_for('static',filename='jquery.datetimepicker.full.min.js') }}"></script>
+{% endblock %}
+
 {% block scripts %}
 <script>
-    /*함수 구현하기*/
     function Reserve(){
 
     }
+    
 </script>
 {% endblock %}
+
 {% block content %}
 <h2>좌석 예약</h2>
 <br>
 <!--이용 시작 시간이 현재가 아니면 선택한 이용 시작 시간대의 예약 현황을 좌석현황에 불러와야함 -->
-<!--입력값 받기-->
-<label id="starttime">이용 시작 시간 <input type="datetime-local"></label>
-<label id="finishtime">이용 종료 시간 <input type="datetime-local"></label>
+<!--입력값 받는 폼-->
+<label >이용 시작 시간 <input id="starttime" type="text" ></label>
+<label >이용 종료 시간 <input id="finishtime" type="text" ></label>
+
+<!--datetimepicker사용해 좌석 이용 시간 입력받기-->
+<script>
+    $('#starttime').datetimepicker({
+        minDate:0, /*과거 날짜는 예약 불가*/
+        minTime:0, /*과거 시간은 예약 불가*/
+        step:30
+    });
+    $('#finishtime').datetimepicker({
+        minDate:0, /*과거 날짜는 예약 불가*/
+        minTime:0, /*과거 시간은 예약 불가*/
+        step:30
+    });
+    </script>
 
 <div id="reserve-wrapper">
     <button id="door" class="btn btn-primary" disabled>출입문</button>
@@ -104,20 +126,18 @@
 {% block style %}
 <style>
     #starttime, #finishtime{
-        display: block;
-    }
-    #starttime input, #finishtime input{
-        height:35px;
-        border:2px solid rgba(0, 0, 0, 0.125);
-        border-radius: 7px;
-        padding:10px;
-        margin-left:15px;
+        display: inline-block;
+        margin-bottom: 30px;
     }
     #starttime{
-        margin-bottom: 10px;
+        margin-right:40px;
     }
-    #finishtime{
-        margin-bottom: 20px;
+    input{
+        height:35px;
+        border:2px solid rgba(0, 0, 0, 0.125);
+        border-radius: 10px;
+        padding:10px;
+        margin-left:5px;
     }
     #reserve-wrapper{
         width:1000px;
