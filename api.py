@@ -149,8 +149,6 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
             new_data = []
             data = Reservation.query.filter(Reservation.user_id == session['login']).all()
             now = datetime.now()
-            seatInfooutput = db.session.query(Seat.user_id,Seat.finish_time,Seat.seatNum).filter(Seat.finish_time >= now).order_by(Seat.finish_time).all()
-            print(seatInfooutput)
             for i in range(len(data)):
                 if data[i].finishtime > now:
                     new_data.append(data[i]) 
@@ -260,7 +258,13 @@ def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB
         return jsonify({'result':'fail'})
 
 # 좌석 초기화 -> 매 오후 12시에 트리거를 걸어서 좌석 table을 초기화해주기
-
+def seat_initialize():
+    seatinfo = db.session.query(Seat).all()
+    for i in range(len(seatinfo)):
+        seatinfo[i].user_id = ''
+        seatinfo[i].used = 0
+        seatinfo[i].finish_time = 0
+        db.session.commit()
 
 # 좌석 정보 업데이트하기 Reservation 테이블에서 시작시간에 맞춰서 Seat 테이블 정보 변경해주기
 def seat_update():
