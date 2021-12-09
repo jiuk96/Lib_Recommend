@@ -20,7 +20,7 @@ modified by 최고운 12.5 체크박스 db연동 수정
         let useremail = $("#useremail").val()
         let distance = $("#distance").val()
         let acheater = $("#acheater").val()
-        let windownear = $("#windownear").val()
+        let windowfar = $("#windowfar").val()
         let door = $("#door").val()
 
         if (user_id == '' || user_pw == '') {
@@ -54,7 +54,7 @@ modified by 최고운 12.5 체크박스 db연동 수정
                 'useremail': useremail,
                 'distance' : distance,
                 'acheater' : acheater,
-                'windownear' : windownear,
+                'windowfar' : windowfar,
                 'door' : door
             },
             success: function (res) {
@@ -152,15 +152,16 @@ function TfCheck(obj) { /*선호좌석 체크박스의 리턴값을 0/1로 설�
                     <input type="hidden" name="input_check" value='0' id="distance_hidden"/>
                 </label>
                 <label class="col-sm-2 col-form-label">
-                    <input type="checkbox" class="form-check-input" id="acheater" value="0" onchange="TfCheck(this);"> 히터/에어컨
+                    <input type="checkbox" class="form-check-input" id="acheater" value="0" onchange="TfCheck(this);"> 히터/에어컨 멀리
                     <input type="hidden" name="input_check" value='0' id="acheater_hidden"/>
                 </label>
+                <br>
                 <label class="col-sm-2 col-form-label">
-                    <input type="checkbox" class="form-check-input" id="windownear" value="0" onchange="TfCheck(this);"> 창문 근처
-                    <input type="hidden" name="input_check" value='0' id="windownear_hidden"/>
+                    <input type="checkbox" class="form-check-input" id="windowfar" value="0" onchange="TfCheck(this);"> 창문 멀리
+                    <input type="hidden" name="input_check" value='0' id="windowfar_hidden"/>
                 </label>
                 <label class="col-sm-2 col-form-label">
-                    <input type="checkbox" class="form-check-input" id="door" value="0" onchange="TfCheck(this);"> 출입문 근처
+                    <input type="checkbox" class="form-check-input" id="door" value="0" onchange="TfCheck(this);"> 출입문 멀리
                     <input type="hidden" name="input_check" value='0' id="door_hidden"/>
                 </label>
             </div>
@@ -221,17 +222,18 @@ function TfCheck(obj) { /*선호좌석 체크박스의 리턴값을 0/1로 설�
     #prefer{
         display: inline;
         height:64px;
-        width:500px;
-        text-align: center;
+        width:350px;
+
     }
     #prefer input{
         margin-right: 3px;
         vertical-align: middle;
     }
     #prefer label{
-        display: inline;
+        display: inline-block;
+        width:140px;
         margin-right:12px;
-        line-height: 64px;
+        line-height: 20px;
     }
     #bt{
         text-align: center;
