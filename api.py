@@ -159,14 +159,14 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
         return redirect("/")
 
 # 조회하고자 하는 시간에 이미 있는 예약현황을 전달한다. (test x)
-@board.route('/showreserveinfoatcurrenttime', methods=['GET'])
+@board.route('/showreserveinfoatcurrenttime', methods=['post'])
 def give_currentrserveinfo():
-    starttime = datetime.strptime(request.form['starttime'], '%Y/%m/%d %H:%M')
-    finishtime = datetime.strptime(request.form['finishtime'], '%Y/%m/%d %H:%M')
-    
+    starttime = request.form['starttime']
+    finishtime = request.form['finishtime']
+    print(starttime, finishtime)
     #현재 조회한 시간 내에 있는 예약 정보를 다 가지고 온다.
-    request_info = Reservation.query(Reservation.seatNum).filter((starttime<=Reservation.starttime<=finishtime)|(starttime<=Reservation.finishtime<=finishtime)|(starttime<=Reservation.starttime and finishtime>= Reservation.finishtime)|(starttime>=Reservation.starttime and finishtime<=Reservation.finishtime)).all()
-    
+    # request_info = Reservation.query(Reservation.seatNum).filter((starttime<=Reservation.starttime<=finishtime)|(starttime<=Reservation.finishtime<=finishtime)|(starttime<=Reservation.starttime and finishtime>= Reservation.finishtime)|(starttime>=Reservation.starttime and finishtime<=Reservation.finishtime)).all()
+    request_info = Reservation.query.all()
     return render_template('reserve.html', request_list = request_info)
     
 # 예약 기능 구현
@@ -270,7 +270,6 @@ def update_reserve(): #본인의 예약내용을 수정할 수 있게 하고, DB
 # 예약 삭제 
 @board.route("/main", methods=["DELETE"])
 def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB에도 삭제한다. 
-    now = datetime.now()
     reservationID = request.form['reservationID']
     seatNum = request.form['seatNum']
     user_id = request.form['user_id']
