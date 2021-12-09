@@ -20,10 +20,10 @@ class User(db.Model):
     useremail = db.Column(db.String(50))
     distance = db.Column(db.Integer, default = 0)
     acheater = db.Column(db.Integer, default = 0)
-    windownear = db.Column(db.Integer, default = 0)
+    window = db.Column(db.Integer, default = 0)
     door = db.Column(db.Integer, default = 0)
 
-    def __init__(self,username,user_id,user_pw,userphone,useremail,distance,acheater,windownear,door):
+    def __init__(self,username,user_id,user_pw,userphone,useremail,distance,acheater,window,door):
     
         self.username = username
         self.user_id = user_id
@@ -32,7 +32,7 @@ class User(db.Model):
         self.useremail = useremail
         self.distance = distance
         self.acheater = acheater
-        self.windownear = windownear
+        self.window = window
         self.door = door
 
 class Post(db.Model):
@@ -88,7 +88,7 @@ class Reservation(db.Model):
 #     useremail char(50) NOT NULL,
 #     distance INT,
 #     acheater INT,
-#     windownear INT,
+#     window INT,
 #     door INT,
 #     PRIMARY KEY(studentID));
 
