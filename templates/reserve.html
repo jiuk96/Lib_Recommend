@@ -1,0 +1,244 @@
+<!--
+    created by 최고운 html틀 작성, css 작성
+    modified by 최고운 좌석 이용 시간 선택 단위 30분 단위로 수정, 과거 날짜 선택 불가
+    modified by 최고운 좌석 이용 가능 시간 7시~22시30분 까지로 변경, 예약 시 30분 단위로 하도록 p태그 추가, 예약하기 버튼 추가
+-->
+<!--
+    *좌석 색깔*
+    이용 가능 좌석 : #a0c2f5
+    이용 불가능 좌석 : #c5c6c7
+    추천 좌석 : #c8b1f3
+    구조물 : #565757
+-->
+{% extends 'base.html' %}
+
+{% block head %}
+<!--datetimepicker 사용을 위한 플러그인 설치-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='jquery.datetimepicker.css') }}">
+<script src="{{ url_for('static',filename='jquery.datetimepicker.full.min.js') }}"></script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function Reserve(seatNum){
+      let starttime = $("#starttime").val()
+      let finishtime = $("#finishtime").val()
+      let user_id = `{{g.user.user_id}}`
+
+      $.ajax({
+          url: '/reserve',
+          type: 'post',
+          data: {
+              'seatNum': seatNum,
+              'user_id': user_id,
+              'starttime' : starttime,
+              'finishtime' : finishtime
+          },
+          success: function (res) {
+              let result = res['result']
+              if (result == "success") {
+                  window.location.href = '/main'
+              } else {
+                  alert("저장오류!")
+              }
+          }
+      })
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<h2>좌석 예약</h2>
+<br><br>
+<!--이용 시작 시간이 현재가 아니면 선택한 이용 시작 시간대의 예약 현황을 좌석현황에 불러와야함 -->
+<!--입력값 받는 폼-->
+<p>* 예약은 30분 단위만 가능합니다.</p>
+<label >이용 시작 시간 <input id="starttime" type="text" ></label>
+<label >이용 종료 시간 <input id="finishtime" type="text" ></label>
+
+<!--datetimepicker사용해 좌석 이용 시간 입력받기-->
+<script>
+    $('#starttime').datetimepicker({
+        minDate:0, /*과거 날짜는 예약 불가*/
+        minTime:'7:00', /*7시부터 예약 가능*/
+        maxTime:'22:30', /*22시까지만 예약 가능(22시30분은 예약 불가)(maxTime이 22:00을 포함하지 않아서 30분 더 늦은 시간으로 작성했어요)*/
+        step:30 /*30분 단위*/
+    });
+    $('#finishtime').datetimepicker({
+        minDate:0, /*과거 날짜는 예약 불가*/
+        minTime:'7:30', /*최소 사용 시간이 30분이도록함. 7시예약-7시종료 불가*/
+        maxTime:'23:00', /*22시30분까지 좌석 이용 가능(maxTime이 22:30을 포함하지 않아서 30분 더 늦은 시간으로 작성했어요)*/
+        step:30 /*30분 단위*/
+    });
+    </script>
+
+<div id="reserve-wrapper">
+    <button id="door" class="btn btn-primary" disabled>출입문</button>
+    <button id="window1" class="btn btn-primary" disabled>창문</button>
+
+    <!--예약 불가 좌석 선택 불가능하도록 커서 모양을 조절하거나 .. disabled를 주고 색을 바꾸거나-->
+    <div id="table-wrapper">
+        <div id="line1">
+            <table>
+                <tr>
+                    <td><button class="btn btn-primary"  style="background-color:#c8b1f3 ;" onclick=Reserve(1) >1</button></td>
+                    <td><button class="btn btn-primary"  style="background-color:#c5c6c7 ;" onclick=Reserve(5) >5</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(2) >2</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(6) >6</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(3) >3</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(7) >7</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(4) >4</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(8) >8</button></td>
+                </tr>
+            </table>
+        </div>
+        <div id="line2">
+            <table>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(9)>9</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(13)>13</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(10)>10</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(14)>14</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(11)>11</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(15)>15</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(12)>12</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(16)>16</button></td>
+                </tr>
+            </table>
+        </div>
+        <div id="line3">
+            <table>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(17)>17</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(21)>21</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(18)>18</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(22)>22</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(19)>19</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(23)>23</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn btn-primary" onclick=Reserve(20)>20</button></td>
+                    <td><button class="btn btn-primary" onclick=Reserve(24)>24</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <button id="window2" class="btn btn-primary" disabled>창문</button>
+    <button id="window3" class="btn btn-primary" disabled>창문</button>
+    <button id="window4" class="btn btn-primary" disabled>창문</button>
+    <button id="acheater" class="btn btn-primary" disabled>히터</button>
+
+</div>
+<!--예약시간이나 좌석 정보를 다 받은 후에 예약하기 버튼 눌러서 서버로 전송하는 방식으로 가야될 것 같아요
+좌석 번호같은건 id추가해서 해주시면 될 듯합니다..!-->
+<button id="reserve" class="btn btn-primary" onclick=Reserve()>예약하기</button>
+
+{% endblock %}
+{% block style %}
+<style>
+    p{
+        width:672px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    #starttime, #finishtime{
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+    #starttime{
+        margin-right:40px;
+    }
+    input{
+        height:35px;
+        border:2px solid rgba(0, 0, 0, 0.125);
+        border-radius: 10px;
+        padding:10px;
+        margin-left:5px;
+    }
+    #reserve-wrapper{
+        width:1000px;
+        padding:50px;
+        border:1px solid rgba(0, 0, 0, 0.082);
+        border-radius: 10px;
+        margin: auto;
+    }
+    #door, #window1, #window2, #window3, #window4, #acheater{
+        display:inline;
+        width:70px;
+        height:35px;
+        background-color: #565757;
+    }
+    #window3, #window4{
+        margin-left:90px;
+        margin-right:90px;
+    }
+    #window1{
+        float: left;
+    }
+    #window2{
+        position: relative;
+        float: left;
+        bottom:105px;
+    }
+    #door{
+        float:right;
+    }
+    #acheater{
+        float: right;
+    }
+    main{
+        width:1000px;
+        text-align: center;
+        margin-bottom: 110px;
+    }
+    #line1, #line2, #line3{
+        width:250px;
+        display: inline-block;
+        text-align: center;
+    }
+    table{
+        margin:auto;
+        border-collapse: separate;
+        border-spacing: 30px;
+    }
+    h1{
+        text-align: center;
+    }
+    #table-wrapper{
+        margin:auto;
+    }
+    .btn-primary{
+        background-color: #a0c2f5;
+        border:none;
+        width:50px;
+        height: 35px;
+    }
+    .btn-primary:hover{
+        background-color: #a0c2f5;
+        border:none;
+    }
+    #reserve{
+        margin-top: 30px;
+        width:200px;
+        height:40px;
+        background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+    }
+</style>
+{% endblock %}
