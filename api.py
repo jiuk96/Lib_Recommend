@@ -168,33 +168,33 @@ def reserve():
             now = datetime.now()
             seatNum = request.form['seatNum']
             user_id = request.form['user_id']
-            reserved_time = request.form['reserved_time']
-            starttime = request.form['starttime']
-            finishtime = request.form['finishtime']
+            reserved_time = now
+            starttime = datetime.strptime(request.form['starttime'], '%Y/%m/%d %H:%M')
+            finishtime = datetime.strptime(request.form['finishtime'], '%Y/%m/%d %H:%M')
 
             #사용 시간은 무조건 지금보다는 앞에 해야한다.
-            if starttime > now: 
-                return jsonify({"result":"NoReserve"}) # 사용시간이 지금 시각보다 늦은경우
+            #if starttime > now: 
+                #return jsonify({"result":"NoReserve"}) # 사용시간이 지금 시각보다 늦은경우
 
             #끝나는 시간이 시작시간보다 더 앞이면 알람경고
-            if starttime > finishtime: 
-                return jsonify({"result":"starttimeFirst"}) 
+            #if starttime > finishtime: 
+                #return jsonify({"result":"starttimeFirst"}) 
 
             #하루이상 넘어가는 예약은 불가능하다..
-            if starttime.day != finishtime.day:
-                return jsonify({"result":"OnedayOnly"})
+            #if starttime.day != finishtime.day:
+                #return jsonify({"result":"OnedayOnly"})
 
             #유저가 다른 좌석을 그 당일 이미 예약했으면 다른 자리 불가 TwoReserveImpossibleAtSameDay
-            user_timecheck = Reservation.query.filter(Reservation.user_id==user_id).all()
-            for i in range(len(user_timecheck)):
-                if user_timecheck[i].starttime.day == starttime.day:
-                    return jsonify({"result":"TwoReserveImpossibleAtSameDay"})
+            #user_timecheck = Reservation.query.filter(Reservation.user_id==user_id).all()
+            #for i in range(len(user_timecheck)):
+                #if user_timecheck[i].starttime.day == starttime.day:
+                    #return jsonify({"result":"TwoReserveImpossibleAtSameDay"})
 
             # 좌석예약하려는 시간에 예약이 있는 경우 AlreadySeat json형태로 보냄
-            reserve_data = Reservation.query.filter(Reservation.seatNum == seatNum, Reservation.starttime >= now).all()
-            for i in range(len(reserve_data)):
-                if (starttime < reserve_data[i].starttime < finishtime) or (starttime < reserve_data[i].finishtime < finishtime) or (starttime<reserve_data[i].starttime and finishtime>reserved_time[i].finishtime):
-                    return jsonify({"result":"AlreadySeat"})
+            #reserve_data = Reservation.query.filter(Reservation.seatNum == seatNum, Reservation.starttime >= now).all()
+            #for i in range(len(reserve_data)):
+                #if (starttime < reserve_data[i].starttime < finishtime) or (starttime < reserve_data[i].finishtime < finishtime) or (starttime<reserve_data[i].starttime and finishtime>reserved_time[i].finishtime):
+                    #return jsonify({"result":"AlreadySeat"})
 
             reserve = Reservation(seatNum,user_id,reserved_time,starttime,finishtime)
             db.session.add(reserve)
