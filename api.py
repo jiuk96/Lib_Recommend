@@ -8,6 +8,7 @@
 #                   11.25 - 예약 중복 방지 기능 추가
 #                   11.28 - 예약 중복 방지 기능 수정 및 예약시 발생할 수 있는 오류사랑 방지 기능 추가
 #                   12.04 - 좌석 실시간 정보 업데이트하기 Reservation 테이블에서 시작시간, 종료시간에 맞춰서 Seat 테이블 정보 변경해주기
+#                   12.06 - 사용자가 원하는 시간마다 예약현황 보여주는 기능 구현, 예약 수정 기능 수정 및 예약 마지막 조건 수정
 
 import re
 from flask import json, redirect, request, render_template, jsonify, Blueprint, session, g
@@ -174,9 +175,10 @@ def reserve():
     if session.get("login") is not None:
         if request.method == 'GET':
             data = Seat.query.filter(Seat.used == 1).all() #지금 사용중인 좌석 정보만 넘겨주기
-            # preference_info = db.session.query(User.)
+            # preference_info = db.session.query(User.distance,User.acheater,User.window,User.door).filter(User.user_id == session['login']).first()
+            # data.append(prefer(preference_info))
             # 좌석 추천 알고리즘을 여기다 넣어도 될거같기도...
-            return render_template('reserve.html', seat_list = data) # seat_list 현재 좌석 정보 넘겨주기
+            return render_template('reserve.html', seat_list = data) # seat_list 현재 좌석 정보 넘겨주기 + seat_list[-1]에 알고리즘을 통한 추천좌석까지 보내줌
         else:
             now = datetime.now()
             seatNum = request.form['seatNum']
@@ -252,7 +254,7 @@ def update_reserve(): #본인의 예약내용을 수정할 수 있게 하고, DB
             reserve_data = Reservation.query.filter(Reservation.seatNum == seatNum, Reservation.starttime >= now).all()
             for i in range(len(reserve_data)):
                 if ((starttime <= reserve_data[i].starttime <= finishtime) or (starttime <= reserve_data[i].finishtime <= finishtime) or (starttime<=reserve_data[i].starttime and finishtime>=reserve_data[i].finishtime) or (starttime>=reserve_data[i].starttime and finishtime<=reserve_data[i].finishtime)):
-                    return jsonify("result":"AlreadySeat")
+                    return jsonify({"result":"AlreadySeat"})
 
             data = Reservation.query.filter(Reservation.reservationID == reservationID, Reservation.user_id == user_id).first()
             data.seatNum = seatNum
