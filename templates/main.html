@@ -8,7 +8,7 @@
 {% extends 'base.html' %}
 {% block scripts %}
 <script>
-  function deleteReserve(reservationID, seatNum, user_id) {
+    function deleteReserve(reservationID, seatNum, user_id) {
       $.ajax({
           url: '/main',
           type: 'DELETE',
@@ -23,10 +23,26 @@
                   window.location.reload()
               } else {
                   alert("삭제 실패!")
-              }
-          }
-      })
-  }
+                }
+            }
+        })
+    }
+    function changeReservation(reservationID){
+        $.ajax({
+            url: '/main',
+            type: 'post',
+            data: {
+                'reservationID' : reservationID,
+            },
+            success: function (res) {
+                if (res['result'] == 'success') {
+                    window.location.href = '/reserve'
+                } else {
+                    alert("에러 발생!")
+                }
+            }
+        })
+    }
 </script>
 {% endblock %}
 
@@ -60,10 +76,11 @@
     <table  class="table-primary">
         <thead>
         <tr>
-            <td id="b" scope="col">좌석 번호</td>
+            <td scope="col">좌석 번호</td>
             <td scope="col">예약자</td>
             <td scope="col">좌석 이용 시작 시간</td>
-            <td id="a" scope="col">좌석 이용 종료 시간</td>
+            <td scope="col">좌석 이용 종료 시간</td>
+            <td scope="col">예약 변경</td>
             <td scope="col">예약 삭제</td>
         </tr>
         </thead>
@@ -75,7 +92,8 @@
             <td id="user_ID" scope="row">{{ list.user_id }}</td>
             <td id="starttime" scope="row">{{ list.starttime }}</td>
             <td id="finishtime" scope="row">{{ list.finishtime }}</td>
-            <td id="reserved_time" scope="row"><button id="del" class="btn btn-primary" onclick="deleteReserve('{{list.reservationID}}', '{{list.seatNum}}', '{{list.user_id}}')">삭제</button></td> 
+            <td scope="row"><button id="chn" class="btn btn-primary" onclick="changeReservation('{{ list.reservationID }}')">변경</button></td>
+            <td scope="row"><button id="del" class="btn btn-primary" onclick="deleteReserve('{{list.reservationID}}', '{{list.seatNum}}', '{{list.user_id}}')">삭제</button></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -83,9 +101,6 @@
 </div>
 <br>
 <div id="bt">
-    <!--reserve.html에서 변경을 처리할 때 자바스크립트 도움 필요하면 아래처럼 버튼 형식-->
-    <!--자바스크립트 도움 필요 없으면 a태그로 변경해서 href를 reserve로-->
-    <button id="ext" class="btn btn-primary" onclick=change()>예약 변경하기</button>
     <a class="btn btn-primary"  href="/reserve" >좌석 예약하기</a>
 </div>
 
@@ -133,7 +148,7 @@
         border-radius: 20px;
         width:720px;
     }
-    #del{
+    #del, #chn{
         background-color: #d0d1d1;
         border:none;
     }
@@ -142,7 +157,8 @@
         margin-bottom: 110px;
     }
     #bt a{
-        width:304px;
+        margin-top:15px;
+        width:700px;
         height: 50px;
         padding: 0;
         line-height: 50px;
@@ -150,17 +166,6 @@
         border:none;
         border-radius: 15px;
     }
-    #bt button{
-        width:304px;
-        height: 50px;
-        padding: 0;
-        line-height: 50px;
-        background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
-        border:none;
-        border-radius: 15px;
-    }
-    #ext{
-        margin-right:38px;
-    }
+
 </style>
 {% endblock %}
