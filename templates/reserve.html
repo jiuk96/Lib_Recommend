@@ -40,12 +40,31 @@
               let result = res['result']
               if (result == "success") {
                   window.location.href = '/main'
-              } else {
-                  alert("저장오류!")
               }
-          }
-      })
-}
+              else if (result == "NoReserve") {
+                  alert("현재 시간 이후의 예약만 가능합니다!")
+                  window.location.reload()
+              }
+              else if (result == "starttimeFirst") {
+                  alert("이용 종료 시간을 재설정해주세요!")
+                  window.location.reload()
+              }
+              else if (result == "OnedayOnly") {
+                  alert("하루를 넘기는 예약은 불가합니다!")
+                  window.location.reload()
+              }
+              else if (result == "TwoReserveImpossibleAtSameDay") {
+                  alert("오늘 이미 좌석을 예약하셨습니다!")
+                  window.location.reload()
+              }
+              else{
+                  alert("예약 불가능한 좌석입니다!")
+                  window.location.reload()
+              }
+            }
+        })
+    }
+
 </script>
 {% endblock %}
 
