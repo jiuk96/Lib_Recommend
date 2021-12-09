@@ -257,7 +257,7 @@ def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB
     else:
         return jsonify({'result':'fail'})
 
-# 좌석 초기화 -> 매 오후 12시에 트리거를 걸어서 좌석 table을 초기화해주기
+# 좌석 초기화 -> 매 오후 12시에 좌석 table을 초기화해주기
 def seat_initialize():
     seatinfo = db.session.query(Seat).all()
     for i in range(len(seatinfo)):
@@ -274,7 +274,7 @@ def seat_update():
     
     # 유저가 사용시작시간이 되어 Seat 테이블을 최신화해주는 경우
     seatInfoinput = db.session.query(Reservation.user_id,Reservation.starttime,Reservation.finishtime,Reservation.seatNum).filter(Reservation.starttime == now).order_by(Reservation.starttime).all()
-    if seatInfoinput is not None:
+    if seatInfoinput is not None: 
         for i in range(len(seatInfoinput)):
             data1 = Seat.query.filter(Seat.seatNum == seatInfoinput[i][3]).first()
             user_id = seatInfoinput[i][0]
