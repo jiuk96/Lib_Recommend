@@ -2,6 +2,8 @@
     created by 최고운 html틀 작성, css 작성
     modified by 최고운 좌석 이용 시간 선택 단위 30분 단위로 수정, 과거 날짜 선택 불가
     modified by 최고운 좌석 이용 가능 시간 7시~22시30분 까지로 변경, 예약 시 30분 단위로 하도록 p태그 추가, 예약하기 버튼 추가
+    modified by 신정현 reserve스크립트 작성 및 예약 기능 구현
+    modified by 최고운 예약하기 버튼 삭제 및 안내 멘트 추가
 -->
 <!--
     *좌석 색깔*
@@ -52,10 +54,11 @@
 <br><br>
 <!--이용 시작 시간이 현재가 아니면 선택한 이용 시작 시간대의 예약 현황을 좌석현황에 불러와야함 -->
 <!--입력값 받는 폼-->
-<p>* 예약은 30분 단위만 가능합니다.</p>
+<p id="guide1">* 예약은 30분 단위만 가능합니다.</p>
 <label >이용 시작 시간 <input id="starttime" type="text" ></label>
 <label >이용 종료 시간 <input id="finishtime" type="text" ></label>
-
+<br><br>
+<p id="guide2">* 이용 시작 시간과 이용 종료 시간 선택 후, 원하는 좌석을 클릭하면 바로 예약됩니다 *</p>
 <!--datetimepicker사용해 좌석 이용 시간 입력받기-->
 <script>
     $('#starttime').datetimepicker({
@@ -73,6 +76,7 @@
     </script>
 
 <div id="reserve-wrapper">
+    <p>[열람실 구조]</p>
     <button id="door" class="btn btn-primary" disabled>출입문</button>
     <button id="window1" class="btn btn-primary" disabled>창문</button>
 
@@ -145,14 +149,11 @@
     <button id="acheater" class="btn btn-primary" disabled>히터</button>
 
 </div>
-<!--예약시간이나 좌석 정보를 다 받은 후에 예약하기 버튼 눌러서 서버로 전송하는 방식으로 가야될 것 같아요
-좌석 번호같은건 id추가해서 해주시면 될 듯합니다..!-->
-<button id="reserve" class="btn btn-primary" onclick=Reserve()>예약하기</button>
 
 {% endblock %}
 {% block style %}
 <style>
-    p{
+    #guide1{
         width:672px;
         margin-left: auto;
         margin-right: auto;
