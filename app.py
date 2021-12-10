@@ -14,7 +14,7 @@ import atexit
 app = Flask(__name__)
 app.register_blueprint(board)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@127.0.0.1:3306/Library_recommend"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@127.0.0.1:3306/lib_recommend"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 app.secret_key = 'asodfajsdofijac'
 
