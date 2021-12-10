@@ -19,7 +19,7 @@ from datetime import datetime
 
 board = Blueprint('board',__name__)
 bcrypt = Bcrypt()
-
+g
 # 세션관리
 @board.before_app_request
 def load_logged_in_user(): #이미 로그인을 한 경우, 그 로그인 정보를 세션으로 남겨, 다시 접속하더라도 귀찮게 로그인을 다시 하지 않아도 된다.
@@ -276,7 +276,7 @@ def seat_update():
 def recommend(distance, acheater, windowfar, door): # 좌석 추천 알고리즘
     reclist = [x for x in range(1, 25)]
     seatlist = db.session.query(Seat.used).all()
-    
+
     if distance: # Prefer 클래스의 distance가 True면 조건문이 실행됨
         for i in range(1, 25):
             if (i==1) and (seatlist[i-1][0] == True):
