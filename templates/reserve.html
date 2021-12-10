@@ -177,9 +177,16 @@
 </div>
 <!--이건 색바꾸는거욥-->
 <script>
-    var c = document.querySelectorAll( '#seat' );
-    c[3].style.backgroundColor = '#c5c6c7';
-    c[3].disabled=true;
+    var used = [1, 3, 5] # seat_list[1]로 할경우 되지 않음
+    var using = document.querySelectorAll( '#seat' );
+    for(var i = 0; i < using.length; i++) {
+      for(var j = 0; j < used.length; j++) {
+        if (using[i].value == used[j]) {
+          using[i].style.backgroundColor = '#c5c6c7';
+          using[i].disabled = true;
+      }
+      }
+    }
 </script>
 
 {% endblock %}
