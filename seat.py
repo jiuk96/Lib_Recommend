@@ -1,7 +1,12 @@
 # 2021-11-15 이종은 작성
-# 2021-11-16 ~ 2021-12-07 이종은 수정
+# 2021-11-16 ~ 2021-12-10 이종은 수정
 
-# csv 파일을 db에 적재하여 추천하는 방법도 있을까?
+import re
+from flask import json, redirect, request, render_template, jsonify, Blueprint, session, g
+from models import User, Post, Reservation, Seat
+from db_connect import db
+from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 class Seat: # 좌석 클래스
     def __init__(self, num, group): # Seat의 parameter: num(좌석 번호), group(분단 번호)

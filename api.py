@@ -174,10 +174,15 @@ def give_currentrserveinfo():
 def reserve():
     if session.get("login") is not None:
         if request.method == 'GET':
-            data = Seat.query.filter(Seat.used == 1).all() #지금 사용중인 좌석 정보만 넘겨주기
-            # preference_info = db.session.query(User.distance,User.acheater,User.window,User.door).filter(User.user_id == session['login']).first()
-            # data.append(prefer(preference_info))
-            # 좌석 추천 알고리즘을 여기다 넣어도 될거같기도...
+            data = Seat.query.filter(Seat.used == 1).all() #지금 사용중인 좌석 정보
+            preference_info = db.session.query(User.distance,User.acheater,User.windowfar,User.door).filter(User.user_id == session['login']).first()
+            data.append(prefer(preference_info))
+            #distance = User.query.filter(
+            #windowfar = User.query.filter(
+            #acheater = User.query.filter(
+            #door = User.query.filter(
+            #
+            # 좌석 추천 알고리즘 부분(각 선호 정보가 == 1이면 조건문 실행하도록 변경)
             return render_template('reserve.html', seat_list = data) # seat_list 현재 좌석 정보 넘겨주기 + seat_list[-1]에 알고리즘을 통한 추천좌석까지 보내줌
         else:
             now = datetime.now()
