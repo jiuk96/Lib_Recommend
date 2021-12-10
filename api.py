@@ -8,7 +8,6 @@
 #                   11.25 - 예약 중복 방지 기능 추가
 #                   11.28 - 예약 중복 방지 기능 수정 및 예약시 발생할 수 있는 오류사랑 방지 기능 추가
 #                   12.04 - 좌석 실시간 정보 업데이트하기 Reservation 테이블에서 시작시간, 종료시간에 맞춰서 Seat 테이블 정보 변경해주기
-#                   12.06 - 사용자가 원하는 시간마다 예약현황 보여주는 기능 구현, 예약 수정 기능 수정 및 예약 마지막 조건 수정
 
 import re
 from flask import json, redirect, request, render_template, jsonify, Blueprint, session, g
