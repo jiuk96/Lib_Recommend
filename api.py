@@ -159,7 +159,7 @@ def show_myreserve(): #본인의 다가올 예약내역을 리스트 형태로 �
         return redirect("/")
 
 # 조회하고자 하는 시간에 이미 있는 예약현황을 전달한다. (test x)
-@board.route('/showreserveinfoatcurrenttime', methods=['post'])
+@board.route('/reserve', methods=['post'])
 def give_currentrserveinfo():
     starttime = request.form['starttime']
     finishtime = request.form['finishtime']
