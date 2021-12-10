@@ -14,7 +14,7 @@ import atexit
 app = Flask(__name__)
 app.register_blueprint(board)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@127.0.0.1:3306/lib_recommend"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://gw:rhsldid120!@127.0.0.1:3306/lib2"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
 app.secret_key = 'asodfajsdofijac'
 
@@ -30,16 +30,18 @@ def seat_initailze_atnight():
     with app.app_context():
         seat_initialize()
 
-# # 5초마다 실행
-# @sched.scheduled_job('interval', seconds=10, id='test_1')
-# def job1():
-#     print(f'job1 : {time.strftime("%H:%M:%S")}')
-
-# 매 30분마다 코드 자동실행하여 Seat 테이블 정보 최신화해주기 (07:00~22:30분까지 30분 주기로 체크)
-@sched.scheduled_job('cron', hour='7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22', minute='30,00', id='test_2')
-def seat_update_every_30minutes():
+# 5초마다 실행
+@sched.scheduled_job('interval', seconds=10, id='test_1')
+def job1():
+    #print(f'job1 : {time.strftime("%H:%M:%S")}')
     with app.app_context():
         seat_update()
+
+# 매 30분마다 코드 자동실행하여 Seat 테이블 정보 최신화해주기 (07:00~22:30분까지 30분 주기로 체크)
+#@sched.scheduled_job('cron', hour='7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22', minute='30,00', id='test_2')
+#def seat_update_every_30minutes():
+#    with app.app_context():
+#        seat_update()
 
 # 도중에 홈페이지 꺼지면 끝
 atexit.register(lambda: sched.shutdown(wait=False))
