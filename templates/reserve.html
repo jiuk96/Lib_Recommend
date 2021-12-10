@@ -71,11 +71,15 @@
 {% block content %}
 <h2>좌석 예약</h2>
 <br><br>
-<!--이용 시작 시간이 현재가 아니면 선택한 이용 시작 시간대의 예약 현황을 좌석현황에 불러와야함 -->
 <!--입력값 받는 폼-->
-<p id="guide1">* 예약은 30분 단위만 가능합니다.</p>
+<p id="guide1">* 열람실 운영 시간 : 오전 7시 ~ 오후 10시 30분</p>
 <label >이용 시작 시간 <input id="starttime" type="text" ></label>
 <label >이용 종료 시간 <input id="finishtime" type="text" ></label>
+
+<!--정현님 이렇게 받아오면 됩니당-->
+{% for list in seat_list %}
+<p>{{ list.seatNum }}</p>
+{% endfor %}
 
 
 <br><br>
@@ -91,14 +95,14 @@
     $('#finishtime').datetimepicker({
         minDate:0, /*과거 날짜는 예약 불가*/
         maxDate:0,
-        minTime:0, /*최소 사용 시간이 30분이도록함. 7시예약-7시종료 불가*/
+        minTime:'7:00', 
         maxTime:'23:00', /*22시30분까지 좌석 이용 가능(maxTime이 22:30을 포함하지 않아서 30분 더 늦은 시간으로 작성했어요)*/
         step:30 /*30분 단위*/
     });
     </script>
 
 <div id="reserve-wrapper">
-    <p>[열람실 구조]</p>
+    <p>[열람실 이용 현황]</p>
     <button id="door" class="btn btn-primary" disabled>출입문</button>
     <button id="window1" class="btn btn-primary" disabled>창문</button>
 
@@ -107,60 +111,60 @@
         <div id="line1">
             <table>
                 <tr>
-                    <td><button class="btn btn-primary"  style="background-color:#c8b1f3 ;" onclick=Reserve(1) >1</button></td>
-                    <td><button class="btn btn-primary"  style="background-color:#c5c6c7 ;" onclick=Reserve(5) >5</button></td>
+                    <td><button class="btn btn-primary" id="seat"  onclick=Reserve(1) >1</button></td>
+                    <td><button class="btn btn-primary" id="seat"  onclick=Reserve(5) >5</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(2) >2</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(6) >6</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(2) >2</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(6) >6</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(3) >3</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(7) >7</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(3) >3</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(7) >7</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(4) >4</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(8) >8</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(4) >4</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(8) >8</button></td>
                 </tr>
             </table>
         </div>
         <div id="line2">
             <table>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(9)>9</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(13)>13</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(9)>9</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(13)>13</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(10)>10</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(14)>14</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(10)>10</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(14)>14</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(11)>11</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(15)>15</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(11)>11</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(15)>15</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(12)>12</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(16)>16</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(12)>12</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(16)>16</button></td>
                 </tr>
             </table>
         </div>
         <div id="line3">
             <table>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(17)>17</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(21)>21</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(17)>17</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(21)>21</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(18)>18</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(22)>22</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(18)>18</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(22)>22</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(19)>19</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(23)>23</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(19)>19</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(23)>23</button></td>
                 </tr>
                 <tr>
-                    <td><button class="btn btn-primary" onclick=Reserve(20)>20</button></td>
-                    <td><button class="btn btn-primary" onclick=Reserve(24)>24</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(20)>20</button></td>
+                    <td><button class="btn btn-primary" id="seat" onclick=Reserve(24)>24</button></td>
                 </tr>
             </table>
         </div>
@@ -171,6 +175,12 @@
     <button id="acheater" class="btn btn-primary" disabled>히터</button>
 
 </div>
+<!--이건 색바꾸는거욥-->
+<script>
+    var c = document.querySelectorAll( '#seat' );
+    c[3].style.backgroundColor = '#c5c6c7';
+    c[3].disabled=true;
+</script>
 
 {% endblock %}
 {% block style %}
