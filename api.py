@@ -58,10 +58,10 @@ def join(): #회원가입 정보를 Front에서 받아, 정보들을 DB에 저�
             useremail = request.form['useremail']
             distance = request.form['distance']
             acheater = request.form['acheater']
-            windownear = request.form['windownear']
+            windowfar = request.form['windowfar']
             door = request.form['door']
 
-            user = User(username,user_id,pw_hash,userphone,useremail,distance,acheater,windownear,door)
+            user = User(username,user_id,pw_hash,userphone,useremail,distance,acheater,windowfar,door)
                 
             db.session.add(user)
             db.session.commit()
