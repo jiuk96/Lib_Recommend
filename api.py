@@ -165,7 +165,7 @@ def reserve():
         if request.method == 'GET':
             data = Seat.query.filter(Seat.used == 1).all() #지금 사용중인 좌석 정보
             preference_info = db.session.query(User.distance,User.acheater,User.windowfar,User.door).filter(User.user_id == session['login']).first()
-            data.append(prefer(preference_info))
+            #data.append(prefer(preference_info))
             #distance = User.query.filter(
             #windowfar = User.query.filter(
             #acheater = User.query.filter(
@@ -182,8 +182,8 @@ def reserve():
             finishtime = datetime.strptime(request.form['finishtime'], '%Y/%m/%d %H:%M')
 
             #사용 시간은 무조건 지금보다는 앞에 해야한다.
-            if starttime < now: 
-                return jsonify({"result":"NoReserve"}) # 사용시간이 지금 시각보다 늦은경우
+            #if starttime < now: 
+                #return jsonify({"result":"NoReserve"}) # 사용시간이 지금 시각보다 늦은경우
 
             #끝나는 시간이 시작시간보다 더 앞이면 알람경고
             if starttime > finishtime: 
