@@ -80,7 +80,6 @@
             <td scope="col">예약자</td>
             <td scope="col">좌석 이용 시작 시간</td>
             <td scope="col">좌석 이용 종료 시간</td>
-            <td scope="col">예약 변경</td>
             <td scope="col">예약 삭제</td>
         </tr>
         </thead>
@@ -92,7 +91,6 @@
             <td id="user_ID" scope="row">{{ list.user_id }}</td>
             <td id="starttime" scope="row">{{ list.starttime }}</td>
             <td id="finishtime" scope="row">{{ list.finishtime }}</td>
-            <td scope="row"><button id="chn" class="btn btn-primary" onclick="changeReservation('{{ list.reservationID }}')">변경</button></td>
             <td scope="row"><button id="del" class="btn btn-primary" onclick="deleteReserve('{{list.reservationID}}', '{{list.seatNum}}', '{{list.user_id}}')">삭제</button></td>
         </tr>
         {% endfor %}
