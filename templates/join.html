@@ -69,32 +69,21 @@ modified by 최고운 12.5 체크박스 db연동 수정
             }
         })
     }
-    $(function() {
-        $('#select').change(function() {
-            if ($('#select').val() == 'directly') {
-                $('#textEmail').attr("disabled", false);
-                $('#textEmail').val("");
-                $('#textEmail').focus();
-            } else {
-                $('#textEmail').val($('#select').val());
-            }
-        })
-    });
 
-function TfCheck(obj) { /*선호좌석 체크박스의 리턴값을 0/1로 설정*/
-    var checked = obj.checked;
-    if(checked){
-        obj.value="1";
-    }else{
-        obj.value="0";
-    }
+    function TfCheck(obj) { /*선호좌석 체크박스의 값을 0/1로 설정*/
+        var checked = obj.checked;
+        if(checked){
+            obj.value="1";
+        }else{
+            obj.value="0";
+        }
 };
 
 </script>
 {% endblock %}
 
 {% block content %}
-<h2 class="title" style="font-weight: 600;">회원가입</h2>
+<h2 class="title">회원가입</h2>
 <br>
 <div class="card">
     <div class="card-body">
@@ -132,16 +121,6 @@ function TfCheck(obj) { /*선호좌석 체크박스의 리턴값을 0/1로 설�
             <label class="col-sm-2 col-form-label" id="t">이메일</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="useremail" placeholder="이메일을 입력하세요.">
-                <!--<span>@</span>
-                <input id="textEmail" class="form-control" placeholder="이메일을 선택하세요.">
-                <select class="form-select" id="select">
-                    <option value="" disabled selected>E-Mail 선택</option>
-                    <option value="naver.com" id="naver.com">naver.com</option>
-                    <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
-                    <option value="gmail.com" id="gmail.com">gmail.com</option>
-                    <option value="nate.com" id="nate.com">nate.com</option>
-                    <option value="directly" id="textEmail">직접 입력하기</option>
-                </select>-->
             </div>
         </div>
         <div class="mb-3 row">

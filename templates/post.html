@@ -111,9 +111,10 @@ main{
 }
 
 #edit-area {
-  background : #dcdcdc;
+  background : #ebebeb;
   border-radius : 5px;
 }
+
 
 </style>
 
@@ -195,8 +196,9 @@ main{
 
 {% block content %}
 <h2 class="title">도서관 건의사항</h2>
-<hr>
+<br>
 <div class="card">
+  <br>
     <h5 class="card-header">새 글 작성</h5>
     <div class="card-body">
         <div class="mb-3">
@@ -208,9 +210,10 @@ main{
         </div>
     </div>
 </div>
-<hr>
+<br>
 {% for post in post_list %}
 <div class="card mt-2">
+  <hr>
   <h5 class="card-header">글 목록</h5>
     <div class="card-body">
         <div class="mb-3">

@@ -27,22 +27,7 @@
             }
         })
     }
-    function changeReservation(reservationID){
-        $.ajax({
-            url: '/main',
-            type: 'post',
-            data: {
-                'reservationID' : reservationID,
-            },
-            success: function (res) {
-                if (res['result'] == 'success') {
-                    window.location.href = '/reserve'
-                } else {
-                    alert("에러 발생!")
-                }
-            }
-        })
-    }
+
 </script>
 {% endblock %}
 
@@ -84,9 +69,9 @@
         </tr>
         </thead>
         <tbody>
+        <!--예약 내역 받아오기-->
         {% for list in reserve_list %}
         <tr>
-            <!-- 이게 저도 잘 몰랐는데, 그 list.변수이름을 적어주면 되더라고요! -->
             <td id="seatNum" scope="row">{{ list.seatNum }}</td>
             <td id="user_ID" scope="row">{{ list.user_id }}</td>
             <td id="starttime" scope="row">{{ list.starttime }}</td>
