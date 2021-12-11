@@ -88,7 +88,7 @@ class Reservation(db.Model):
 #     useremail char(50) NOT NULL,
 #     distance INT,
 #     acheater INT,
-#     window INT,
+#     windowfar INT,
 #     door INT,
 #     PRIMARY KEY(studentID));
 
