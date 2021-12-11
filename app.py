@@ -30,9 +30,9 @@ def seat_initailze_atnight():
         seat_initialize()
 
 # 10초마다 코드 자동실행하여 Seat 테이블 정보 최신화해주기
-@sched.scheduled_job('interval', seconds=10, id='test_1')
-def job1():
-    #print(f'job1 : {time.strftime("%H:%M:%S")}')
+@sched.scheduled_job('interval', seconds=10, id='test_2')
+def seat_update_every10sec():
+    #print(f'job1 : {time.strftime("%H:%M:%S")}') #정상 작동하는지 체크
     with app.app_context():
         seat_update()
 
