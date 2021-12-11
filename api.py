@@ -214,9 +214,9 @@ def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB
         db.session.delete(reserve_data)
         db.session.commit()
         if seat_data is not None:
-            user_id = ''
+            user_id = None
             used = 0
-            finish_time = 0
+            finish_time = None
 
             seat_data.user_id = user_id
             seat_data.used = used
@@ -231,9 +231,9 @@ def delete_reserve(): #본인의 예약내용을 삭제할 수 있게 하고, DB
 def seat_initialize():
     seatinfo = db.session.query(Seat).all()
     for i in range(len(seatinfo)):
-        seatinfo[i].user_id = ''
+        seatinfo[i].user_id = None
         seatinfo[i].used = 0
-        seatinfo[i].finish_time = 0
+        seatinfo[i].finish_time = None
         db.session.commit()
 
 # 좌석 정보 업데이트하기 Reservation 테이블에서 시작시간에 맞춰서 Seat 테이블 정보 변경해주기
@@ -261,9 +261,9 @@ def seat_update():
     if seatInfooutput is not None:
         for j in range(len(seatInfooutput)):
             data2 = Seat.query.filter(Seat.seatNum == seatInfooutput[j][2]).first()
-            user_id = ''
+            user_id = None
             used = 0
-            finish_time = 0
+            finish_time = None
 
             data2.user_id = user_id
             data2.used = used
