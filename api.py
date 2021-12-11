@@ -279,53 +279,61 @@ def recommend(distance, acheater, windowfar, door): # 좌석 추천 알고리즘
     if distance: # Prefer 클래스의 distance가 True면 조건문이 실행됨
         for i in range(1, 25):
             if (i==1) and (seatlist[i-1][0] == True):
-                for k in [i, i+1, i+6, i+7]:
+                for k in [i, i+1, i+2, i+3]:
                     if k in reclist: reclist.remove(k)
 
-            if (i==7 or i==13) and (seatlist[i-1][0] == True):
-                for k in [i-6, i-5, i, i+1, i+6, i+7]:
+            if (i==2 or i==10) and (seatlist[i-1][0] == True):
+                for k in [i-1, i, i+1, i+2, i+7, i+9]:
+                    if k in reclist: reclist.remove(k)
+            
+            if (i==3 or i==5 or i==11 or i==13 or i==19 or i==21) and (seatlist[i-1][0] == True):
+                for k in [i-2, i-1, i, i+1, i+2, i+3]:
+                    if k in reclist: reclist.remove(k)
+            
+            if (i==4 or i==6 or i==12 or i==14) and (seatlist[i-1][0] == True):
+                for k in [i-3, i-2, i-1, i, i+1, i+2, i+5, i+7, i+9]:
+                    if k in reclist: reclist.remove(k)
+            
+            if (i==7) and (seatlist[i-1][0] == True):
+                for k in [i-2, i-1, i, i+1]:
                     if k in reclist: reclist.remove(k)
 
-            if (i==19) and (seatlist[i-1][0] == True):
-                for k in [i-6, i-5, i, i+1]:
+            if (i==8 or i==16) and (seatlist[i-1][0] == True):
+                for k in [i-3, i-2, i-1, i, i+5, i+7]:
                     if k in reclist: reclist.remove(k)
-
-            if (i==2 or i==3 or i==4 or i==5) and (seatlist[i-1][0] == True):
-                for k in [i-1, i, i+1, i+5, i+6, i+7]:
+            
+            if (i==9 or i==17) and (seatlist[i-1][0] == True):
+                for k in [i-7, i-5, i, i+1, i+2, i+3]:
                     if k in reclist: reclist.remove(k)
-
-            if (i==8 or i==9 or i==10 or i==11 or i==14 or i==15 or i==16 or i==17) and (seatlist[i-1][0] == True):
-                for k in [i-7, i-6, i-5, i-1, i, i+1, i+5, i+6, i+7]:
-                    if k in reclist: reclist.remove(k)
-
-            if (i==20 or i==21 or i==22 or i==23) and (seatlist[i-1][0] == True):
-                for k in [i-7, i-6, i-5, i-1, i, i+1]:
+            
+            if (i==15 or i==23) and (seatlist[i-1][0] == True):
+                for k in [i-9, i-7, i-2, i-1, i, i+1]:
                     if k in reclist: reclist.remove(k)
                     
-            if (i==6) and (seatlist[i-1][0] == True):
-                for k in [i-1, i, i+5, i+6]:
-                    if k in reclist: reclist.remove(k)
-                
-            if (i==12 or i==18) and (seatlist[i-1][0] == True):
-                for k in [i-7, i-6, i-1, i, i+5, i+6]:
-                    if k in reclist: reclist.remove(k)
-
+            if (i==18) and (seatlist[i-1][0] == True):
+                for k in [i-1, i, i+1, i+2]:
+                    if k in reclist: reclist.remove(k)  
+                    
+            if (i==20 or i==22) and (seatlist[i-1][0] == True):
+                for k in [i-3, i-2, i-1, i, i+1, i+2]:
+                    if k in reclist: reclist.remove(k)  
+                    
             if (i==24) and (seatlist[i-1][0] == True):
-                for k in [i-7, i-6, i-1, i]:
-                    if k in reclist: reclist.remove(k)
+                for k in [i-3, i-2, i-1, i]:
+                    if k in reclist: reclist.remove(k)    
                 
     if acheater:
-        for k in [17, 18, 23, 24]:
+        for k in [21, 22, 23, 24]:
             if k in reclist:
                 reclist.remove(k)
 
     if windowfar:
-        for k in [1, 7, 13, 19, 20, 21, 22, 23, 24]:
+        for k in [1, 3, 5, 7, 8, 15, 16, 23, 24]:
             if k in reclist:
                 reclist.remove(k)
         
     if door:
-        for k in [5, 6, 11, 12]:
+        for k in [17, 18, 19, 20]:
             if k in reclist:
                 reclist.remove(k)
 
