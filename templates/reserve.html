@@ -180,6 +180,15 @@
 
 </div>
 
+<!--추천 좌석 색깔 바꾸기-->
+{{ seat_list[-1] }}
+{% for s in seat_list[-1] %}
+<script>
+    var use = document.querySelectorAll( '#seat' );
+    use[{{s}}-1].style.backgroundColor='#c8b1f3';
+</script>
+{% endfor %}
+
 <!--현재 이용중인 좌석(예약 불가) 색깔 바꾸고 disabled속성으로 변경-->
 {% for list in seat_list %}
 <script>
@@ -189,13 +198,7 @@
 </script>
 {% endfor %}
 
-<!--추천 좌석 색깔 바꾸기-->
-{% for s in seat_list[-1] %}
-<script>
-    var use = document.querySelectorAll( '#seat' );
-    use[{{s}}-1].style.backgroundColor='#c8b1f3';
-</script>
-{% endfor %}
+
 
 {% endblock %}
 {% block style %}
